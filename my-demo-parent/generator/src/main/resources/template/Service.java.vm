@@ -1,0 +1,19 @@
+package ${package}.${moduleName}.service;
+
+import com.baomidou.mybatisplus.extension.service.IService;
+import ${package}.${moduleName}.entity.${className}Entity;
+import com.shangji.atguigu.gulimall.commons.bean.PageVo;
+import com.shangji.atguigu.gulimall.commons.bean.QueryCondition;
+
+
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Service extends IService<${className}Entity> {
+
+}
+
