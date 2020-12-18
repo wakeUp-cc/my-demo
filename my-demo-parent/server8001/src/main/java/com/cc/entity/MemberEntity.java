@@ -2,9 +2,10 @@ package com.cc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 会员表
@@ -15,7 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName("member")
-public class MemberEntity implements Serializable {
+public class MemberEntity extends QueryEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

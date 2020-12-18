@@ -1,6 +1,5 @@
 package com.cc;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -11,8 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @描述
  */
 @EnableDiscoveryClient
-@SpringBootApplication
-@MapperScan("com.**.mapper")
+@SpringBootApplication(scanBasePackages = "com.cc")
 public class Server8001 {
     public static void main(String[] args) {
         SpringApplication.run(Server8001.class, args);
