@@ -2,8 +2,6 @@ import axios from 'axios'
 // 请求等待响应框
 import {Loading, Message} from 'element-ui'
 import router from '@/router'
-// 弹框
-import BulletFrame from '../utils/BulletFrame'
 
 // 加载全局的loading
 let loadingInstance = null
@@ -31,7 +29,7 @@ axios.interceptors.request.use(config => {
   config.withCredentials = true
   // 请求前缀
   // config.baseURL = window.location.origin
-  config.baseURL = 'http://localhost:8899'
+  config.baseURL = 'http://localhost:8001'
   return config
 }, error => {
   return Promise.reject(error)
@@ -44,8 +42,8 @@ axios.interceptors.response.use(response => {
   loadingInstance.close()
   // 1. 根据自己项目需求定制自己的拦截
   // 如果请求接口返回失败,那么就进行弹窗提示
-  if (response.data.status === 0) {
-    BulletFrame.spring(response.data)
+  if (response.code === 500) {
+    Message.error(response.message)
   }
   // 2. 然后返回数据
   return response
@@ -89,11 +87,11 @@ export default {
   /**
    * get 请求
    * @param url 接口路由
-   * @param auth 是否需要带登录信息
+   * @param data 参数
    * @returns {AxiosPromise<any>}
    */
-  get (url) {
-    return axios.get(url)
+  get: (url, data) => {
+    return axios.get(url, {params: data})
   },
 
   /**
@@ -103,7 +101,7 @@ export default {
    * @param data 接口参数
    * @returns {AxiosPromise<any>}
    */
-  post (url, data) {
+  post(url, data) {
     return axios.post(url, data)
   },
 
@@ -114,7 +112,7 @@ export default {
    * @param auth 是否需要带登录信息
    * @returns {AxiosPromise<any>}
    */
-  put (url, data) {
+  put(url, data) {
     return axios.put(url, data)
   },
 
@@ -124,7 +122,7 @@ export default {
    * @param auth 是否需要带登录信息
    * @returns {AxiosPromise}
    */
-  del (url) {
+  del(url) {
     return axios.delete(url)
   },
 
@@ -134,7 +132,7 @@ export default {
    * @param file 接口文件
    * @param auth 是否需要带登录信息
    */
-  uploader (url, file) {
+  uploader(url, file) {
     let param = new FormData()
     param.append('file', file)
     return axios.post(url, param)

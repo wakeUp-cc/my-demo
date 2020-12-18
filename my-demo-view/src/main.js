@@ -3,15 +3,16 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
 import http from './api/http.js'
-Vue.prototype.$http = http
-
 import moment from 'moment'
-Vue.prototype.$moment = moment;
+import * as math from 'mathjs'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
-import math from 'mathjs'
-Vue.prototype.$math = math;
+Vue.use(ElementUI)
+Vue.prototype.$http = http
+Vue.prototype.$moment = moment
+Vue.prototype.$math = math
 
 Vue.config.productionTip = false
 

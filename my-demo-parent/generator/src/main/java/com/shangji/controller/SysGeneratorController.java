@@ -41,7 +41,6 @@ public class SysGeneratorController {
 	@RequestMapping("/list")
 	public R list(@RequestParam Map<String, Object> params){
 		PageUtils pageUtil = sysGeneratorService.queryList(new Query(params));
-		
 		return R.ok().put("page", pageUtil);
 	}
 	
@@ -51,12 +50,10 @@ public class SysGeneratorController {
 	@RequestMapping("/code")
 	public void code(String tables, HttpServletResponse response) throws IOException{
 		byte[] data = sysGeneratorService.generatorCode(tables.split(","));
-		
-		response.reset();  
+		response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"guli.zip\"");
         response.addHeader("Content-Length", "" + data.length);  
         response.setContentType("application/octet-stream; charset=UTF-8");  
-  
-        IOUtils.write(data, response.getOutputStream());  
+        IOUtils.write(data, response.getOutputStream());
 	}
 }

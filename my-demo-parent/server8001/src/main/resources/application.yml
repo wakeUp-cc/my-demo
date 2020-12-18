@@ -3,6 +3,28 @@ server:
 spring:
   application:
     name: server8001
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/my_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    #使用druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #初始化连接池的连接数量 大小，最小，最大
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      #配置获取连接等待超时的时间
+      max-wait: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 30000
+      # 用来检测连接是否有效的sql，要求是一个查询语句
+      validation-query: SELECT 1 FROM DUAL
 nacos:
   config:
     server-addr: 127.0.0.1:8848
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml

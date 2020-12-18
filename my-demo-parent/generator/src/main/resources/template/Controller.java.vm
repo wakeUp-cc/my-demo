@@ -1,18 +1,11 @@
 package ${package}.${moduleName}.controller;
 
 import java.util.Arrays;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import com.cc.entity.ResEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import ${package}.${moduleName}.entity.${className}Entity;
 import ${package}.${moduleName}.service.${className}Service;
-
-
-
 
 /**
  * ${comments}
@@ -21,57 +14,38 @@ import ${package}.${moduleName}.service.${className}Service;
  * @email ${email}
  * @date ${datetime}
  */
-@Api(tags = "${comments} 管理")
 @RestController
 @RequestMapping("${moduleName}/${pathName}")
 public class ${className}Controller {
+
     @Autowired
     private ${className}Service ${classname}Service;
-
-
 
     /**
      * 信息
      */
-    @ApiOperation("详情查询")
     @GetMapping("/info/{${pk.attrname}}")
-    public Resp<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
+    public ResEntity<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
 		${className}Entity ${classname} = ${classname}Service.getById(${pk.attrname});
-
-        return Resp.ok(${classname});
+        return ResEntity.success(${classname});
     }
 
     /**
-     * 保存
+     * 新增或修改
      */
-    @ApiOperation("保存")
-    @PostMapping("/save")
-    public Resp<Object> save(@RequestBody ${className}Entity ${classname}){
-		${classname}Service.save(${classname});
-
-        return Resp.ok(null);
+    @PostMapping("/saveOrUpdate")
+    public ResEntity<String> saveOrUpdate(@RequestBody ${className}Entity ${classname}){
+		${classname}Service.saveOrUpdate(${classname});
+        return ResEntity.success();
     }
 
     /**
-     * 修改
+     * 批量删除
      */
-    @ApiOperation("修改")
-    @PostMapping("/update")
-    public Resp<Object> update(@RequestBody ${className}Entity ${classname}){
-		${classname}Service.updateById(${classname});
-
-        return Resp.ok(null);
-    }
-
-    /**
-     * 删除
-     */
-    @ApiOperation("删除")
     @PostMapping("/delete")
-    public Resp<Object> delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
+    public ResEntity<String> delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
 		${classname}Service.removeByIds(Arrays.asList(${pk.attrname}s));
-
-        return Resp.ok(null);
+        return ResEntity.success();
     }
 
 }
