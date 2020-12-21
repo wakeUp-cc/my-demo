@@ -7,8 +7,7 @@ import com.cc.entity.MemberEntity;
  * 会员表
  *
  * @author cc
- * @email 
- * @date 2020-12-18 10:27:27
+ * @date 2020-12-21 15:16:24
  */
 public interface MemberService extends IService<MemberEntity> {
 

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import ${package}.${moduleName}.entity.${className}Entity;
 import ${package}.${moduleName}.service.${className}Service;
 
@@ -14,11 +15,10 @@ import ${package}.${moduleName}.service.${className}Service;
  * ${comments}
  *
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("${moduleName}/${pathName}")
+@RequestMapping("/${moduleName}/${pathName}")
 public class ${className}Controller {
 
     @Autowired
@@ -28,9 +28,8 @@ public class ${className}Controller {
      * 获取单条
      */
     @GetMapping("/info/{${pk.attrname}}")
-    public ResEntity<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-		${className}Entity ${classname} = i${className}Service.getById(${pk.attrname});
-        return ResEntity.success(${classname});
+    public ResEntity<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
+        return ResEntity.success(i${className}Service.getById(${pk.attrname}));
     }
 
     /**
@@ -41,7 +40,7 @@ public class ${className}Controller {
         Page<${className}Entity> result = new Page<>();
         if (${classname}.getIsPage()) {
             result.setRecords(
-                        i${className}Service.list(
+                    i${className}Service.list(
                             new QueryWrapper<${className}Entity>().lambda()
                     )
             );
@@ -59,7 +58,7 @@ public class ${className}Controller {
      * 新增或修改
      */
     @PostMapping("/saveOrUpdate")
-    public ResEntity<String> saveOrUpdate(@RequestBody ${className}Entity ${classname}){
+    public ResEntity<String> saveOrUpdate(@RequestBody ${className}Entity ${classname}) {
 		i${className}Service.saveOrUpdate(${classname});
         return ResEntity.success();
     }
@@ -68,8 +67,8 @@ public class ${className}Controller {
      * 批量删除
      */
     @PostMapping("/delete")
-    public ResEntity<String> delete(@RequestBody ${pk.attrType}[] ${pk.attrname}s){
-		i${className}Service.removeByIds(Arrays.asList(${pk.attrname}s));
+    public ResEntity<String> delete(@RequestBody List<${pk.attrType}> ${pk.attrname}s) {
+		i${className}Service.removeByIds(${pk.attrname}s);
         return ResEntity.success();
     }
 

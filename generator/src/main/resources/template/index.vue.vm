@@ -77,14 +77,14 @@
     components: {
       AddOrUpdate
     },
-    activated () {
+    created () {
       this.getDataList()
     },
     methods: {
       // 获取数据列表
       getDataList () {
         this.dataListLoading = true
-        #[[this.$http({]]#
+        #[[this.$http.request({]]#
           url: '/${moduleName}/${pathName}/list',
           method: 'get',
           #[[params: {]]#
@@ -94,8 +94,8 @@
           }
         }).then(({data}) => {
           if (data && data.code === 200) {
-            this.dataList = data.records
-            this.total = data.total
+            this.dataList = data.message.records
+            this.total = data.message.total
           } else {
             this.dataList = []
             this.total = 0
@@ -135,22 +135,16 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          #[[this.$http({]]#
+          #[[this.$http.request({]]#
             url: '/${moduleName}/${pathName}/delete',
             method: 'post',
-            data: {ids: ids}
+            data: ids
           }).then(({data}) => {
-            if (data && data.code === 0) {
-              #[[this.$message({]]#
-                message: '操作成功',
-                type: 'success',
-                duration: 1500,
-                onClose: () => {
-                  this.getDataList()
-                }
-              })
+            if (data && data.code === 200) {
+              #[[this.$message.success('操作成功!')]]#
+              this.getDataList()
             } else {
-              #[[this.$message.error(data.msg)]]#
+              #[[this.$message.error(data.message)]]#
             }
           })
         })

@@ -8,18 +8,16 @@ import com.cc.entity.ResEntity;
 import com.cc.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * 会员表
  *
  * @author cc
- * @email
- * @date 2020-12-18 17:33:07
+ * @date 2020-12-21 15:16:24
  */
 @RestController
-@RequestMapping("cc/member")
+@RequestMapping("/cc/member")
 public class MemberController {
 
     @Autowired
@@ -29,9 +27,8 @@ public class MemberController {
      * 获取单条
      */
     @GetMapping("/info/{id}")
-    public ResEntity<MemberEntity> info(@PathVariable("id") Long id){
-		MemberEntity member = iMemberService.getById(id);
-        return ResEntity.success(member);
+    public ResEntity<MemberEntity> info(@PathVariable("id") Long id) {
+        return ResEntity.success(iMemberService.getById(id));
     }
 
     /**
@@ -42,7 +39,7 @@ public class MemberController {
         Page<MemberEntity> result = new Page<>();
         if (member.getIsPage()) {
             result.setRecords(
-                        iMemberService.list(
+                    iMemberService.list(
                             new QueryWrapper<MemberEntity>().lambda()
                     )
             );
@@ -60,7 +57,7 @@ public class MemberController {
      * 新增或修改
      */
     @PostMapping("/saveOrUpdate")
-    public ResEntity<String> saveOrUpdate(@RequestBody MemberEntity member){
+    public ResEntity<String> saveOrUpdate(@RequestBody MemberEntity member) {
 		iMemberService.saveOrUpdate(member);
         return ResEntity.success();
     }
@@ -69,8 +66,8 @@ public class MemberController {
      * 批量删除
      */
     @PostMapping("/delete")
-    public ResEntity<String> delete(@RequestBody Long[] ids){
-		iMemberService.removeByIds(Arrays.asList(ids));
+    public ResEntity<String> delete(@RequestBody List<Long> ids) {
+		iMemberService.removeByIds(ids);
         return ResEntity.success();
     }
 

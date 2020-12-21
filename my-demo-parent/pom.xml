@@ -8,7 +8,6 @@
     <artifactId>my-demo-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>generator</module>
         <module>my-demo-web-common</module>
         <module>server8001</module>
         <module>server8002</module>

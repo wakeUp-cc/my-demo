@@ -1,5 +1,6 @@
 package com.cc.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -11,8 +12,7 @@ import java.util.Date;
  * 会员表
  * 
  * @author cc
- * @email 
- * @date 2020-12-18 10:27:27
+ * @date 2020-12-21 15:16:24
  */
 @Data
 @TableName("member")
@@ -23,7 +23,7 @@ public class MemberEntity extends QueryEntity implements Serializable {
 	/**
 	 * 主键
 	 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 	/**
 	 * 会员名称

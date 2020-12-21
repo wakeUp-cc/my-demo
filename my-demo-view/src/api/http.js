@@ -85,6 +85,14 @@ axios.interceptors.response.use(response => {
 
 export default {
   /**
+   * 普通请求
+   * @param config
+   * @returns {*}
+   */
+  request: (config) => {
+    return axios(config)
+  },
+  /**
    * get 请求
    * @param url 接口路由
    * @param data 参数
@@ -101,7 +109,7 @@ export default {
    * @param data 接口参数
    * @returns {AxiosPromise<any>}
    */
-  post(url, data) {
+  post (url, data) {
     return axios.post(url, data)
   },
 
@@ -112,7 +120,7 @@ export default {
    * @param auth 是否需要带登录信息
    * @returns {AxiosPromise<any>}
    */
-  put(url, data) {
+  put (url, data) {
     return axios.put(url, data)
   },
 
@@ -122,7 +130,7 @@ export default {
    * @param auth 是否需要带登录信息
    * @returns {AxiosPromise}
    */
-  del(url) {
+  del (url) {
     return axios.delete(url)
   },
 
@@ -132,7 +140,7 @@ export default {
    * @param file 接口文件
    * @param auth 是否需要带登录信息
    */
-  uploader(url, file) {
+  uploader (url, file) {
     let param = new FormData()
     param.append('file', file)
     return axios.post(url, param)
