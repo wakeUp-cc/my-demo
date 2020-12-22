@@ -173,11 +173,11 @@ export default {
           method: 'post',
           data: ids
         }).then(({data}) => {
-          if (data && data.code === 200) {
+          if (data && data.message && data.code === 200) {
             this.$message.success('操作成功!')
             this.getDataList()
           } else {
-            this.$message.error(data.message)
+            this.$message.error('操作失败!')
           }
         })
       })

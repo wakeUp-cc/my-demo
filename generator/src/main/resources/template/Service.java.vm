@@ -1,5 +1,6 @@
 package ${package}.${moduleName}.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import ${package}.${moduleName}.entity.${className}Entity;
 
@@ -9,7 +10,15 @@ import ${package}.${moduleName}.entity.${className}Entity;
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${className}Service extends IService<${className}Entity> {
+public interface I${className}Service extends IService<${className}Entity> {
+
+    /**
+     * 查询多条
+     *
+     * @param ${classname}
+     * @return
+     */
+    IPage<${className}Entity> list(${className}Entity ${classname}) throws Exception;
 
 }
 

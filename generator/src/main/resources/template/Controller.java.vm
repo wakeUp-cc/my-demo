@@ -1,15 +1,13 @@
 package ${package}.${moduleName}.controller;
 
-import java.util.Arrays;
-import com.cc.entity.ResEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import ${package}.${moduleName}.entity.ResEntity;
 import ${package}.${moduleName}.entity.${className}Entity;
 import ${package}.${moduleName}.service.${className}Service;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * ${comments}
@@ -22,54 +20,50 @@ import ${package}.${moduleName}.service.${className}Service;
 public class ${className}Controller {
 
     @Autowired
-    private ${className}Service i${className}Service;
+    private I${className}Service i${className}Service;
 
     /**
      * 获取单条
+     *
+     * @param ${pk.attrname}
+     * @return
      */
     @GetMapping("/info/{${pk.attrname}}")
-    public ResEntity<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) {
+    public ResEntity<${className}Entity> info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}) throws Exception {
         return ResEntity.success(i${className}Service.getById(${pk.attrname}));
     }
 
     /**
      * 查询多条
+     *
+     * @param ${classname}
+     * @return
      */
     @GetMapping("/list")
-    public ResEntity<IPage<${className}Entity>> list(${className}Entity ${classname}) {
-        Page<${className}Entity> result = new Page<>();
-        if (${classname}.getIsPage()) {
-            result.setRecords(
-                    i${className}Service.list(
-                            new QueryWrapper<${className}Entity>().lambda()
-                    )
-            );
-        } else {
-            result = i${className}Service.page(
-                    new Page<${className}Entity>(${classname}.getCurrent(), ${classname}.getSize()),
-                    new QueryWrapper<${className}Entity>()
-                            .lambda()
-            );
-        }
-        return ResEntity.success(result);
+    public ResEntity<IPage<${className}Entity>> list(${className}Entity ${classname}) throws Exception {
+        return ResEntity.success(i${className}Service.list(${classname}));
     }
 
     /**
      * 新增或修改
+     *
+     * @param ${classname}
+     * @return
      */
     @PostMapping("/saveOrUpdate")
-    public ResEntity<String> saveOrUpdate(@RequestBody ${className}Entity ${classname}) {
-		i${className}Service.saveOrUpdate(${classname});
-        return ResEntity.success();
+    public ResEntity<Boolean> saveOrUpdate(@RequestBody ${className}Entity ${classname}) throws Exception {
+        return ResEntity.success(i${className}Service.saveOrUpdate(${classname}));
     }
 
     /**
      * 批量删除
+     *
+     * @param ${pk.attrname}s
+     * @return
      */
     @PostMapping("/delete")
-    public ResEntity<String> delete(@RequestBody List<${pk.attrType}> ${pk.attrname}s) {
-		i${className}Service.removeByIds(${pk.attrname}s);
-        return ResEntity.success();
+    public ResEntity<Boolean> delete(@RequestBody List<${pk.attrType}> ${pk.attrname}s) throws Exception {
+        return ResEntity.success(i${className}Service.removeByIds(${pk.attrname}s));
     }
 
 }

@@ -42,7 +42,7 @@ export default {
           { required: true, message: '会员年龄不能为空', trigger: 'blur' }
         ],
         sex: [
-          { required: true, message: '会员性别', trigger: 'blur' }
+          { required: true, message: '会员性别  字典表 sex不能为空', trigger: 'blur' }
         ]
       }
     }
@@ -85,12 +85,12 @@ export default {
               'createUser': this.dataForm.createUser
             }
           }).then(({data}) => {
-            if (data && data.code === 200) {
+            if (data && data.message && data.code === 200) {
               this.$message.success('操作成功!')
               this.visible = false
               this.$emit('refreshDataList')
             } else {
-              this.$message.error(data.message)
+              this.$message.error('操作失败!')
             }
           })
         }

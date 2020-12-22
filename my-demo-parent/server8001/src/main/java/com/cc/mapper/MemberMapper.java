@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * 会员表
  * 
  * @author cc
- * @date 2020-12-21 15:16:24
+ * @date 2020-12-22 17:49:28
  */
 @Mapper
 public interface MemberMapper extends BaseMapper<MemberEntity> {

@@ -1,13 +1,34 @@
 package ${package}.${moduleName}.service.impl;
 
-import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import ${package}.${moduleName}.mapper.${className}Mapper;
 import ${package}.${moduleName}.entity.${className}Entity;
-import ${package}.${moduleName}.service.${className}Service;
-
+import ${package}.${moduleName}.service.I${className}Service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
 
 @Service("${classname}Service")
-public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}Entity> implements ${className}Service {
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}Entity> implements I${className}Service {
+
+    @Override
+    public IPage<${className}Entity> list(${className}Entity ${classname}) throws Exception {
+        IPage<${className}Entity> result = new Page<>();
+        if (${classname}.getIsPage()) {
+            result.setRecords(
+                    list(
+                            new QueryWrapper<${className}Entity>().lambda()
+                    )
+            );
+        } else {
+            result = page(
+                    new Page<${className}Entity>(${classname}.getCurrent(), ${classname}.getSize()),
+            new QueryWrapper<${className}Entity>()
+                    .lambda()
+            );
+        }
+        return result;
+    }
 
 }
