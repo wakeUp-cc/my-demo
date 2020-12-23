@@ -45,14 +45,14 @@ public class ${className}Controller {
     }
 
     /**
-     * 新增或修改
+     * 批量新增或修改
      *
      * @param ${classname}
      * @return
      */
-    @PostMapping("/saveOrUpdate")
-    public ResEntity<Boolean> saveOrUpdate(@RequestBody ${className}Entity ${classname}) throws Exception {
-        return ResEntity.success(i${className}Service.saveOrUpdate(${classname}));
+    @PostMapping("/saveOrUpdateBatch")
+    public ResEntity<Boolean> saveOrUpdateBatch(@RequestBody List<${className}Entity> ${classname}s) throws Exception {
+        return ResEntity.success(i${className}Service.saveOrUpdateBatch(${classname}s));
     }
 
     /**

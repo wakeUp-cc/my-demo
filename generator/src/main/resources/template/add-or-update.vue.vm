@@ -73,9 +73,9 @@
         #[[this.$refs['dataForm'].validate((valid) => {]]#
           if (valid) {
           #[[this.$http.request({]]#
-              url: `/${moduleName}/${pathName}/saveOrUpdate`,
+              url: `/${moduleName}/${pathName}/saveOrUpdateBatch`,
               method: 'post',
-              #[[data: {]]#
+              data: [{
 #foreach($column in $columns)
 #if($column.columnName == $pk.columnName)
                 '${column.attrname}': this.dataForm.${column.attrname} || undefined,
@@ -84,7 +84,7 @@
 
 #end
 #end
-              }
+              }]
             }).then(({data}) => {
               if (data && data.message && data.code === 200) {
                 #[[this.$message.success('操作成功!')]]#

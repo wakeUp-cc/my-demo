@@ -16,16 +16,17 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     public IPage<${className}Entity> list(${className}Entity ${classname}) throws Exception {
         IPage<${className}Entity> result = new Page<>();
         if (${classname}.getIsPage()) {
-            result.setRecords(
-                    list(
-                            new QueryWrapper<${className}Entity>().lambda()
-                    )
-            );
-        } else {
             result = page(
                     new Page<${className}Entity>(${classname}.getCurrent(), ${classname}.getSize()),
             new QueryWrapper<${className}Entity>()
                     .lambda()
+            );
+        } else {
+            result.setRecords(
+                    list(
+                            new QueryWrapper<${className}Entity>()
+                                    .lambda()
+                    )
             );
         }
         return result;
