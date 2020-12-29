@@ -2,7 +2,7 @@ package ${package}.${moduleName}.controller;
 
 import ${package}.${moduleName}.entity.ResEntity;
 import ${package}.${moduleName}.entity.${className}Entity;
-import ${package}.${moduleName}.service.${className}Service;
+import ${package}.${moduleName}.service.I${className}Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -5,6 +5,6 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path: '/member', component: () => import('@/views/cc/member')}
+    {path: '/member', component: () => import('@/views/member/member')}
   ]
 })
