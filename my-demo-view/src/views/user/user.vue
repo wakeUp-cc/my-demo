@@ -91,97 +91,97 @@
 </template>
 
 <script>
-  import AddOrUpdate from './user-add-or-update'
-  export default {
-    data () {
-      return {
-        dataForm: {
-          key: ''
-        },
-        dataList: [],
-        current: 1,
-        size: 10,
-        total: 0,
-        dataListLoading: false,
-        dataListSelections: [],
-        addOrUpdateVisible: false
-      }
+import AddOrUpdate from './user-add-or-update'
+export default {
+  data () {
+    return {
+      dataForm: {
+        key: ''
+      },
+      dataList: [],
+      current: 1,
+      size: 10,
+      total: 0,
+      dataListLoading: false,
+      dataListSelections: [],
+      addOrUpdateVisible: false
+    }
+  },
+  components: {
+    AddOrUpdate
+  },
+  created () {
+    this.getDataList()
+  },
+  methods: {
+    // 获取数据列表
+    getDataList () {
+      this.dataListLoading = true
+      this.$http.request({
+        url: '/cc/user/list',
+        method: 'get',
+        params: {
+          'isPage': true,
+          'current': this.current,
+          'size': this.size
+        }
+      }).then(({data}) => {
+        if (data && data.code === 200) {
+          this.dataList = data.message.records
+          this.total = data.message.total
+        } else {
+          this.dataList = []
+          this.total = 0
+        }
+        this.dataListLoading = false
+      })
     },
-    components: {
-      AddOrUpdate
-    },
-    created () {
+    // 每页数
+    sizeChangeHandle (val) {
+      this.size = val
+      this.current = 1
       this.getDataList()
     },
-    methods: {
-      // 获取数据列表
-      getDataList () {
-        this.dataListLoading = true
+    // 当前页
+    currentChangeHandle (val) {
+      this.current = val
+      this.getDataList()
+    },
+    // 多选
+    selectionChangeHandle (val) {
+      this.dataListSelections = val
+    },
+    // 新增 / 修改
+    addOrUpdateHandle (id) {
+      this.addOrUpdateVisible = true
+      this.$nextTick(() => {
+        this.$refs.addOrUpdate.init(id)
+      })
+    },
+    // 删除
+    deleteHandle (id) {
+      let ids = id ? [id] : this.dataListSelections.map(item => {
+        return item.id
+      })
+      this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
         this.$http.request({
-          url: '/cc/user/list',
-          method: 'get',
-          params: {
-            'isPage': true,
-            'current': this.current,
-            'size': this.size
-          }
+          url: '/cc/user/delete',
+          method: 'post',
+          data: ids
         }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.dataList = data.message.records
-            this.total = data.message.total
+          if (data && data.message && data.code === 200) {
+            this.$message.success('操作成功!')
+            this.getDataList()
           } else {
-            this.dataList = []
-            this.total = 0
+            this.$message.error('操作失败!')
           }
-          this.dataListLoading = false
         })
-      },
-      // 每页数
-      sizeChangeHandle (val) {
-        this.size = val
-        this.current = 1
-        this.getDataList()
-      },
-      // 当前页
-      currentChangeHandle (val) {
-        this.current = val
-        this.getDataList()
-      },
-      // 多选
-      selectionChangeHandle (val) {
-        this.dataListSelections = val
-      },
-      // 新增 / 修改
-      addOrUpdateHandle (id) {
-        this.addOrUpdateVisible = true
-        this.$nextTick(() => {
-          this.$refs.addOrUpdate.init(id)
-        })
-      },
-      // 删除
-      deleteHandle (id) {
-        let ids = id ? [id] : this.dataListSelections.map(item => {
-          return item.id
-        })
-        this.$confirm(`确定对[id=${ids.join(',')}]进行[${id ? '删除' : '批量删除'}]操作?`, '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$http.request({
-            url: '/cc/user/delete',
-            method: 'post',
-            data: ids
-          }).then(({data}) => {
-            if (data && data.message && data.code === 200) {
-              this.$message.success('操作成功!')
-              this.getDataList()
-            } else {
-              this.$message.error('操作失败!')
-            }
-          })
-        })
-      }
+      })
     }
   }
+}
 </script>
