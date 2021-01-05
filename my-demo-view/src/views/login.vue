@@ -12,13 +12,13 @@
       <el-form-item label="密码">
         <el-input v-model="form.password"></el-input>
       </el-form-item>
-      <el-form-item label="确认密码">
+      <el-form-item label="确认密码" v-show="!loginOrRegister">
         <el-input v-model="form.repeatPassword"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">重置</el-button>
-        <el-button v-if="loginOrRegister">登录</el-button>
-        <el-button v-else>注册</el-button>
+        <el-button type="primary" @click="reset">重置</el-button>
+        <el-button v-if="loginOrRegister" @click="login">登录</el-button>
+        <el-button v-else @click="register">注册</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -29,7 +29,8 @@ export default {
   props: {
     form: {
       username: null,
-      password: null
+      password: null,
+      repeatPassword: null
     },
     loginOrRegister: true,
     loginOrRegisterSelect: [
@@ -41,7 +42,19 @@ export default {
     return {}
   },
   mounted: {},
-  methods: {}
+  methods: {
+    reset () {
+      for (let formElement in this.form) {
+        this.form[formElement] = null
+      }
+    },
+    login () {
+      // 进行MD5加密
+    },
+    register () {
+
+    }
+  }
 }
 </script>
 <style scoped>

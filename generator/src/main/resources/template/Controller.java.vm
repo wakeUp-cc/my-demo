@@ -47,7 +47,7 @@ public class ${className}Controller {
     /**
      * 批量新增或修改
      *
-     * @param ${classname}
+     * @param ${classname}s
      * @return
      */
     @PostMapping("/saveOrUpdateBatch")

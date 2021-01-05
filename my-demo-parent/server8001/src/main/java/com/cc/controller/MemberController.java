@@ -47,7 +47,7 @@ public class MemberController {
     /**
      * 批量新增或修改
      *
-     * @param member
+     * @param members
      * @return
      */
     @PostMapping("/saveOrUpdateBatch")

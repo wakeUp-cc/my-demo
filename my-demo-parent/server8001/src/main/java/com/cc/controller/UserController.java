@@ -1,9 +1,9 @@
 package com.cc.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cc.entity.ResEntity;
 import com.cc.entity.UserEntity;
 import com.cc.service.IUserService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,12 +47,12 @@ public class UserController {
     /**
      * 批量新增或修改
      *
-     * @param user
+     * @param users
      * @return
      */
-    @PostMapping("/saveOrUpdateBatch")
-    public ResEntity<Boolean> saveOrUpdateBatch(@RequestBody List<UserEntity> users) throws Exception {
-        return ResEntity.success(iUserService.saveOrUpdateBatch(users));
+    @PostMapping("/register")
+    public ResEntity<Boolean> register(@RequestBody List<UserEntity> users) throws Exception {
+        return ResEntity.success(iUserService.register(users));
     }
 
     /**
@@ -64,6 +64,18 @@ public class UserController {
     @PostMapping("/delete")
     public ResEntity<Boolean> delete(@RequestBody List<Long> ids) throws Exception {
         return ResEntity.success(iUserService.removeByIds(ids));
+    }
+
+    /**
+     * 登录
+     *
+     * @param userEntity
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/login")
+    public ResEntity<String> login(@RequestBody UserEntity userEntity) throws Exception {
+        return iUserService.login(userEntity);
     }
 
 }
