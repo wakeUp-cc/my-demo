@@ -2,7 +2,6 @@ package com.cc.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cc.entity.ResEntity;
 import com.cc.entity.UserEntity;
 
 import java.util.List;
@@ -39,7 +38,7 @@ public interface IUserService extends IService<UserEntity> {
      * @return
      * @throws Exception
      */
-    ResEntity<String> login(UserEntity userEntity) throws Exception;
+    Boolean login(UserEntity userEntity) throws Exception;
 
 }
 

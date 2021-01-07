@@ -52,7 +52,7 @@ axios.interceptors.response.use(response => {
   loadingInstance.close()
   // 请求失败
   if (error.data) {
-    let message = '请求错误'
+    let message = '请求错误!'
     switch (error.data.status) {
       case 400:
         // 对400错误进行处理
@@ -76,10 +76,10 @@ axios.interceptors.response.use(response => {
     })
   } else {
     Message({
-      message: '请求超时, 请刷新重试',
+      message: '请求超时, 请刷新重试!',
       type: 'error'
     })
-    return Promise.reject(new Error('请求超时, 请刷新重试'))
+    return Promise.reject(new Error('请求超时, 请刷新重试!'))
   }
 })
 

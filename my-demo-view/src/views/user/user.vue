@@ -48,7 +48,7 @@
         header-align="center"
         align="center"
         :show-overflow-tooltip="true"
-        label="名称">
+        label="用户名">
       </el-table-column>
       <el-table-column
         prop="createTime"

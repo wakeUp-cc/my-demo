@@ -10,8 +10,8 @@
     <el-form-item label="密码" prop="password">
       <el-input v-model="dataForm.password" placeholder="密码"></el-input>
     </el-form-item>
-    <el-form-item label="名称" prop="name">
-      <el-input v-model="dataForm.name" placeholder="名称"></el-input>
+    <el-form-item label="用户名" prop="name">
+      <el-input v-model="dataForm.name" placeholder="用户名"></el-input>
     </el-form-item>
     <el-form-item label="注册时间" prop="createTime">
       <el-input v-model="dataForm.createTime" placeholder="注册时间"></el-input>
@@ -48,7 +48,7 @@ export default {
           { required: true, message: '密码不能为空', trigger: 'blur' }
         ],
         name: [
-          { required: true, message: '名称不能为空', trigger: 'blur' }
+          { required: true, message: '用户名不能为空', trigger: 'blur' }
         ],
         createTime: [
           { required: true, message: '注册时间不能为空', trigger: 'blur' }

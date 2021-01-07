@@ -1,10 +1,11 @@
 package com.cc.service.impl;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cc.entity.ResEntity;
+import com.cc.constants.Constant;
 import com.cc.entity.UserEntity;
 import com.cc.mapper.UserMapper;
 import com.cc.service.IUserService;
@@ -21,8 +22,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (user.getIsPage()) {
             result = page(
                     new Page<UserEntity>(user.getCurrent(), user.getSize()),
-            new QueryWrapper<UserEntity>()
-                    .lambda()
+                    new QueryWrapper<UserEntity>()
+                            .lambda()
             );
         } else {
             result.setRecords(
@@ -37,12 +38,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public Boolean register(List<UserEntity> users) throws Exception {
+        //进行加密
+        users.forEach(user -> user.setPassword(DigestUtil.md5Hex(user.getPassword() + Constant.SALT)));
         return saveOrUpdateBatch(users);
     }
 
     @Override
-    public ResEntity<String> login(UserEntity userEntity) throws Exception {
-        return null;
+    public Boolean login(UserEntity userEntity) throws Exception {
+        UserEntity one = getOne(new QueryWrapper<UserEntity>()
+                .lambda()
+                .eq(UserEntity::getUsername, userEntity.getUsername())
+                .eq(UserEntity::getPassword, DigestUtil.md5Hex(userEntity.getPassword() + Constant.SALT)));
+        if (one == null) {
+            return true;
+        }
+        return false;
     }
 
 }

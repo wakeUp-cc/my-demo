@@ -74,8 +74,8 @@ public class UserController {
      * @throws Exception
      */
     @PostMapping("/login")
-    public ResEntity<String> login(@RequestBody UserEntity userEntity) throws Exception {
-        return iUserService.login(userEntity);
+    public ResEntity<Boolean> login(@RequestBody UserEntity userEntity) throws Exception {
+        return ResEntity.success(iUserService.login(userEntity));
     }
 
 }
