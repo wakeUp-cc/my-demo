@@ -5,14 +5,23 @@
     :visible.sync="visible">
     <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()"
              label-width="80px">
-      <el-form-item label="会员名称" prop="name">
-        <el-input v-model="dataForm.name" placeholder="会员名称"></el-input>
+      <el-form-item label="菜单名称" prop="name">
+        <el-input v-model="dataForm.name" placeholder="菜单名称"></el-input>
       </el-form-item>
-      <el-form-item label="会员年龄" prop="age">
-        <el-input v-model="dataForm.age" placeholder="会员年龄"></el-input>
+      <el-form-item label="菜单地址" prop="path">
+        <el-input v-model="dataForm.path" placeholder="菜单地址"></el-input>
       </el-form-item>
-      <el-form-item label="会员性别  字典表 sex" prop="sex">
-        <el-input v-model="dataForm.sex" placeholder="会员性别  字典表 sex"></el-input>
+      <el-form-item label="菜单图标" prop="icon">
+        <el-input v-model="dataForm.icon" placeholder="菜单图标"></el-input>
+      </el-form-item>
+      <el-form-item label="菜单排序" prop="sort">
+        <el-input v-model="dataForm.sort" placeholder="菜单排序"></el-input>
+      </el-form-item>
+      <el-form-item label="是否显示   0不显示  1显示" prop="showStatus">
+        <el-input v-model="dataForm.showStatus" placeholder="是否显示   0不显示  1显示"></el-input>
+      </el-form-item>
+      <el-form-item label="父菜单ID   0为顶级菜单" prop="parentId">
+        <el-input v-model="dataForm.parentId" placeholder="父菜单ID   0为顶级菜单"></el-input>
       </el-form-item>
       <el-form-item label="创建人员ID" prop="createUser">
         <el-input v-model="dataForm.createUser" placeholder="创建人员ID"></el-input>
@@ -42,8 +51,11 @@ export default {
       dataForm: {
         id: 0,
         name: '',
-        age: '',
-        sex: '',
+        path: '',
+        icon: '',
+        sort: '',
+        showStatus: '',
+        parentId: '',
         createUser: '',
         createTime: '',
         updateUser: '',
@@ -51,13 +63,22 @@ export default {
       },
       dataRule: {
         name: [
-          {required: true, message: '会员名称不能为空', trigger: 'blur'}
+          {required: true, message: '菜单名称不能为空', trigger: 'blur'}
         ],
-        age: [
-          {required: true, message: '会员年龄不能为空', trigger: 'blur'}
+        path: [
+          {required: true, message: '菜单地址不能为空', trigger: 'blur'}
         ],
-        sex: [
-          {required: true, message: '会员性别  字典表 sex不能为空', trigger: 'blur'}
+        icon: [
+          {required: true, message: '菜单图标不能为空', trigger: 'blur'}
+        ],
+        sort: [
+          {required: true, message: '菜单排序不能为空', trigger: 'blur'}
+        ],
+        showStatus: [
+          {required: true, message: '是否显示   0不显示  1显示不能为空', trigger: 'blur'}
+        ],
+        parentId: [
+          {required: true, message: '父菜单ID   0为顶级菜单不能为空', trigger: 'blur'}
         ],
         createUser: [
           {required: true, message: '创建人员ID不能为空', trigger: 'blur'}
@@ -82,13 +103,16 @@ export default {
         this.$refs['dataForm'].resetFields()
         if (this.dataForm.id) {
           this.$http.request({
-            url: `/cc/member/info/${this.dataForm.id}`,
+            url: `/cc/menu/info/${this.dataForm.id}`,
             method: 'get'
           }).then(({data}) => {
             if (data && data.code === 200) {
               this.dataForm.name = data.message.name
-              this.dataForm.age = data.message.age
-              this.dataForm.sex = data.message.sex
+              this.dataForm.path = data.message.path
+              this.dataForm.icon = data.message.icon
+              this.dataForm.sort = data.message.sort
+              this.dataForm.showStatus = data.message.showStatus
+              this.dataForm.parentId = data.message.parentId
               this.dataForm.createUser = data.message.createUser
               this.dataForm.createTime = data.message.createTime
               this.dataForm.updateUser = data.message.updateUser
@@ -103,13 +127,16 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.$http.request({
-            url: `/cc/member/saveOrUpdateBatch`,
+            url: `/cc/menu/saveOrUpdateBatch`,
             method: 'post',
             data: [{
               'id': this.dataForm.id || undefined,
               'name': this.dataForm.name,
-              'age': this.dataForm.age,
-              'sex': this.dataForm.sex,
+              'path': this.dataForm.path,
+              'icon': this.dataForm.icon,
+              'sort': this.dataForm.sort,
+              'showStatus': this.dataForm.showStatus,
+              'parentId': this.dataForm.parentId,
               'createUser': this.dataForm.createUser,
               'createTime': this.dataForm.createTime,
               'updateUser': this.dataForm.updateUser,

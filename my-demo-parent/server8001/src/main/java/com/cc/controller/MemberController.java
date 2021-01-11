@@ -1,9 +1,9 @@
 package com.cc.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cc.entity.MemberEntity;
 import com.cc.entity.ResEntity;
+import com.cc.entity.MemberEntity;
 import com.cc.service.IMemberService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * 会员表
  *
  * @author cc
- * @date 2020-12-29 10:03:30
+ * @date 2021-01-11 16:40:57
  */
 @RestController
 @RequestMapping("/cc/member")
@@ -23,7 +23,7 @@ public class MemberController {
     private IMemberService iMemberService;
 
     /**
-     * 获取单条
+     * 查询单条
      *
      * @param id
      * @return

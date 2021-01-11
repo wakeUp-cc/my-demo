@@ -23,7 +23,7 @@ public class UserController {
     private IUserService iUserService;
 
     /**
-     * 获取单条
+     * 查询单条
      *
      * @param id
      * @return

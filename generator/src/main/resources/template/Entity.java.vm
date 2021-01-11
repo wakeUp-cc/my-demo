@@ -32,6 +32,6 @@ public class ${className}Entity extends QueryEntity implements Serializable {
 @TableId(type = IdType.AUTO)
 	#end
 private $column.attrType $column.attrname;
-#end
 
+#end
 }

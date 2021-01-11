@@ -34,21 +34,42 @@
         header-align="center"
         align="center"
         :show-overflow-tooltip="true"
-        label="会员名称">
+        label="菜单名称">
       </el-table-column>
       <el-table-column
-        prop="age"
+        prop="path"
         header-align="center"
         align="center"
         :show-overflow-tooltip="true"
-        label="会员年龄">
+        label="菜单地址">
       </el-table-column>
       <el-table-column
-        prop="sex"
+        prop="icon"
         header-align="center"
         align="center"
         :show-overflow-tooltip="true"
-        label="会员性别  字典表 sex">
+        label="菜单图标">
+      </el-table-column>
+      <el-table-column
+        prop="sort"
+        header-align="center"
+        align="center"
+        :show-overflow-tooltip="true"
+        label="菜单排序">
+      </el-table-column>
+      <el-table-column
+        prop="showStatus"
+        header-align="center"
+        align="center"
+        :show-overflow-tooltip="true"
+        label="是否显示   0不显示  1显示">
+      </el-table-column>
+      <el-table-column
+        prop="parentId"
+        header-align="center"
+        align="center"
+        :show-overflow-tooltip="true"
+        label="父菜单ID   0为顶级菜单">
       </el-table-column>
       <el-table-column
         prop="createUser"
@@ -105,7 +126,7 @@
 </template>
 
 <script>
-import AddOrUpdate from './member-add-or-update'
+import AddOrUpdate from './menu-add-or-update'
 
 export default {
   data () {
@@ -133,7 +154,7 @@ export default {
     getDataList () {
       this.dataListLoading = true
       this.$http.request({
-        url: '/cc/member/list',
+        url: '/cc/menu/list',
         method: 'get',
         params: {
           'isPage': true,
@@ -184,7 +205,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$http.request({
-          url: '/cc/member/delete',
+          url: '/cc/menu/delete',
           method: 'post',
           data: ids
         }).then(({data}) => {
