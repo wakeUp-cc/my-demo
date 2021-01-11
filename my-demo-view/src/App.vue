@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!--菜单树-->
     <menuComponents></menuComponents>
     <router-view/>
   </div>
