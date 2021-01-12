@@ -1,16 +1,23 @@
 <template>
   <div id="app">
     <!--菜单树-->
-    <menuComponents></menuComponents>
+    <menuComponents v-show="menuShow"></menuComponents>
     <router-view/>
   </div>
 </template>
 
 <script>
 import menuComponents from '@/components/menu'
+
 export default {
   name: 'App',
-  components: {menuComponents}
+  components: {menuComponents},
+  data () {
+    return {
+      // 是否显示菜单,如果要显示,则调用this.$parent.menuShow = true
+      menuShow: false
+    }
+  }
 }
 </script>
 

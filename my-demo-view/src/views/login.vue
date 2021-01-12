@@ -75,6 +75,7 @@ export default {
             this.$http.post(userApi.login, this.form)
               .then((res) => {
                 if (res) {
+                  this.$parent.menuShow = true
                   this.$message.success('登录成功!')
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
