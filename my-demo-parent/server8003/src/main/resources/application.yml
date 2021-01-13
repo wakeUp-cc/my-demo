@@ -1,8 +1,8 @@
 server:
-  port: 8001
+  port: 8003
 spring:
   application:
-    name: server8001
+    name: server8002
 nacos:
   config:
     server-addr: 127.0.0.1:8848

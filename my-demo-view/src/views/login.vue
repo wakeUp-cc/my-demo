@@ -75,10 +75,12 @@ export default {
             this.$http.post(userApi.login, this.form)
               .then((res) => {
                 if (res) {
-                  this.$parent.menuShow = true
                   this.$message.success('登录成功!')
+                  // this.$router.push
+                  this.$parent.menuShow = true
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
+                  this.reset()
                 }
               })
           }
@@ -92,9 +94,11 @@ export default {
               .then((res) => {
                 if (res) {
                   this.$message.success('注册成功!')
+                  this.loginOrRegister = true
                 } else {
                   this.$message.error('注册失败,请与管理员联系!')
                 }
+                this.reset()
               })
           }
         })

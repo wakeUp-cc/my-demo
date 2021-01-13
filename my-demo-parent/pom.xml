@@ -11,6 +11,7 @@
         <module>my-demo-web-common</module>
         <module>server8001</module>
         <module>server8002</module>
+        <module>server8003</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -19,7 +20,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <log4j.version>1.2.17</log4j.version>
+        <log4j.version>2.12.1</log4j.version>
         <lombok.version>1.18.10</lombok.version>
         <mysql.version>5.1.47</mysql.version>
         <druid.verison>1.1.10</druid.verison>
@@ -28,6 +29,7 @@
         <hutool.util.version>5.3.10</hutool.util.version>
         <easypoi.version>4.2.0</easypoi.version>
         <nacos.config.version>0.2.7</nacos.config.version>
+        <spring.cloud.alibaba>2.2.0.RELEASE</spring.cloud.alibaba>
     </properties>
 
     <!--dependencyManagement只是做依赖约束-->
@@ -49,11 +51,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--spring cloud alibaba 2.2.0.RELEASE-->
+            <!--spring cloud alibaba-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.2.0.RELEASE</version>
+                <version>${spring.cloud.alibaba}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -95,8 +97,8 @@
             </dependency>
             <!-- log4j -->
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
             <dependency>

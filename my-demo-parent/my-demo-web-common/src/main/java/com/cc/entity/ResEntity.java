@@ -1,5 +1,6 @@
 package com.cc.entity;
 
+import com.cc.enums.ResCodeEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -29,7 +30,7 @@ public class ResEntity<T> {
      * @return
      */
     public static ResEntity<String> success() {
-        return new ResEntity<String>(200, "操作成功!");
+        return new ResEntity<String>(ResCodeEnum.SUCCESS.code, "操作成功!");
     }
 
     /**
@@ -39,7 +40,7 @@ public class ResEntity<T> {
      * @return
      */
     public static <T> ResEntity<T> success(T message) {
-        return new ResEntity<T>(200, message);
+        return new ResEntity<T>(ResCodeEnum.SUCCESS.code, message);
     }
 
     /**
@@ -48,7 +49,7 @@ public class ResEntity<T> {
      * @return
      */
     public static ResEntity<String> error() {
-        return new ResEntity<String>(500, "操作失败!");
+        return new ResEntity<String>(ResCodeEnum.FAILURE.code, "操作失败!");
     }
 
     /**
@@ -58,7 +59,7 @@ public class ResEntity<T> {
      * @return
      */
     public static <T> ResEntity<T> error(T message) {
-        return new ResEntity<T>(500, message);
+        return new ResEntity<T>(ResCodeEnum.FAILURE.code, message);
     }
 
 }
