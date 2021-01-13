@@ -1,5 +1,6 @@
 package com.cc.feign;
 
+import com.cc.hystrix.DemoFeignHystrix;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -8,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @创建时间 2021/1/13
  * @描述 demo调用方
  */
-@FeignClient(name = "server8002")
+@FeignClient(name = "server8002", fallbackFactory = DemoFeignHystrix.class)
 public interface IDemoFeignClient {
 
     @GetMapping("/demo1/hello/")
