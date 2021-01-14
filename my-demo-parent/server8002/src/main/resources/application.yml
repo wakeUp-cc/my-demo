@@ -3,6 +3,30 @@ server:
 spring:
   application:
     name: server8002
+  # springboot2.1以上需要添加以下配置
+  main:
+    allow-bean-definition-overriding: true
 nacos:
   config:
     server-addr: 127.0.0.1:8848
+# 监听端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+dubbo:
+  #dubbo扫描dubbo注解包名
+  scan:
+    base-packages: com.cc
+  protocol:
+    # dubbo 协议
+    name: dubbo
+    # dubbo 协议端⼝（ -1 表示⾃增端⼝，从 20880 开始）
+    port: -1
+  registry:
+    #注册到springcloud服务
+    address: spring-cloud://127.0.0.1:8848
+  consumer:
+    #关闭订阅服务是否启动的检查【检查时，没有服务提供者会报错】
+    check: false

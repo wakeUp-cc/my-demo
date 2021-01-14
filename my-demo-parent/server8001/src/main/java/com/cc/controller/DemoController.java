@@ -1,7 +1,9 @@
 package com.cc.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.cc.api.IDemoService;
 import com.cc.feign.IDemoFeignClient;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +21,20 @@ public class DemoController {
     @Autowired
     private IDemoFeignClient iDemoFeignClient;
 
-    @NacosValue(value = "${test}",autoRefreshed = true)
+    @Reference
+    private IDemoService iDemoService;
+
+    @NacosValue(value = "${test}", autoRefreshed = true)
     private String value;
 
     @GetMapping("/hello")
     public String hello() {
         return iDemoFeignClient.hello() + value;
+    }
+
+    @GetMapping("/hello2")
+    public String hello2() {
+        return iDemoService.hello();
     }
 
 }
