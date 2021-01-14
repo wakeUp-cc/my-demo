@@ -1,5 +1,6 @@
 package com.cc.controller;
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
 import com.cc.api.IDemoService;
 import com.cc.feign.IDemoFeignClient;
@@ -33,8 +34,13 @@ public class DemoController {
     }
 
     @GetMapping("/hello2")
+    @SentinelResource(fallback = "hello2FallBack")
     public String hello2() {
         return iDemoService.hello();
+    }
+
+    public String hello2FallBack() {
+        return "进入熔断了~";
     }
 
 }
