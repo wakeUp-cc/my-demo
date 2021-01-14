@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @描述 demo熔断
  */
 @Component
-public class DemoFeignHystrix implements FallbackFactory<IDemoFeignClient> {
+public class DemoFeignFallback implements FallbackFactory<IDemoFeignClient> {
 
     @Override
     public IDemoFeignClient create(Throwable throwable) {

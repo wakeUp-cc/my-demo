@@ -15,7 +15,6 @@ public class DemoController {
 
     @GetMapping("/hello")
     public String hello() {
-        int i = 1 / 0;
         return "你好我是8002";
     }
 

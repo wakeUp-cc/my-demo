@@ -3,9 +3,24 @@ server:
 spring:
   application:
     name: server8001
-nacos:
-  config:
-    server-addr: 127.0.0.1:8848
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        # 任意指定一个端口供dashboard监听（此应用作为一个服务端提供接口）
+        port: 8101
+        # sentinel dashboard启动的端口
+        dashboard: 127.0.0.1:8100
 feign:
-  hystrix:
+  # 开启Feign对sentinel的支持
+  sentinel:
     enabled: true
+# 监听端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
