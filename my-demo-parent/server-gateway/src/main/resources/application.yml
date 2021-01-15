@@ -1,0 +1,39 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: server-gateway
+  cloud:
+    nacos:
+      # 注册中心
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      #跨域请求
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+            allowed-methods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
+              - OPTION
+      discovery:
+        locator:
+          #表明gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          enabled: true
+          #是将请求路径上的服务名配置为小写（因为服务注册的时候，向注册中心注册时将服务名转成大写的了
+          lower-case-service-id: true
+      #增加动态配置后可不写
+      routes:
+        #id：我们自定义的路由 ID，保持唯一
+        - id: cc
+          #uri：目标服务地址,以lb://开头（lb代表从注册中心获取服务）如果不是注册中心获取,就写域名
+          uri: lb://server8001
+          #路由条件，Predicate 接受一个输入参数，返回一个布尔值结果。
+          predicates:
+            - Path=/cc/**

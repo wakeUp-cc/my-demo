@@ -10,6 +10,7 @@
     <modules>
         <module>dubbo-api</module>
         <module>my-demo-web-common</module>
+        <module>server-gateway</module>
         <module>server8001</module>
         <module>server8002</module>
         <module>server8003</module>
