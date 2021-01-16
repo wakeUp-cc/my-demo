@@ -49,10 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                 .lambda()
                 .eq(UserEntity::getUsername, userEntity.getUsername())
                 .eq(UserEntity::getPassword, DigestUtil.md5Hex(userEntity.getPassword() + Constant.SALT)));
-        if (one == null) {
-            return true;
-        }
-        return false;
+        return one != null;
     }
 
 }

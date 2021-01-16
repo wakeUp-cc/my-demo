@@ -9,6 +9,7 @@ import * as math from 'mathjs'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import md5 from 'js-md5'
+import '@/styles/style.css'
 
 Vue.use(ElementUI)
 Vue.prototype.$http = http

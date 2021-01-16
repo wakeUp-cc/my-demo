@@ -1,29 +1,37 @@
 <template>
-  <div>
-    <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-      <el-form-item label="操作">
-        <el-select v-model="loginOrRegister">
-          <el-option v-for="(v,index) in loginOrRegisterSelect" :label="v.label" :value="v.value"
-                     :key="index"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="账号" :prop="!loginOrRegister?'username':''">
-        <el-input v-model="form.username"></el-input>
-      </el-form-item>
-      <el-form-item label="用户名" :prop="!loginOrRegister?'name':''" v-show="!loginOrRegister">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" :prop="!loginOrRegister?'password':''">
-        <el-input show-password v-model="form.password"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="repeatPassword" v-show="!loginOrRegister">
-        <el-input show-password v-model="form.repeatPassword"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="reset">重置</el-button>
-        <el-button type="primary" @click="loginOrRegisterMethod">{{ loginOrRegister ? '登录' : '注册' }}</el-button>
-      </el-form-item>
-    </el-form>
+  <div id="login">
+    <el-row style="height: 25%">&nbsp;</el-row>
+    <el-row>
+      <el-col style="width: 40%">&nbsp;</el-col>
+      <el-col style="width: 20%;border-radius: 10px;background: #ffffff">
+        <el-form ref="form" :rules="rules" label-suffix=":" :model="form" label-width="90px"
+                 style="width: 90%;margin-top: 10px">
+          <el-form-item label="操作">
+            <el-select v-model="loginOrRegister">
+              <el-option v-for="(v,index) in loginOrRegisterSelect" :label="v.label" :value="v.value"
+                         :key="index"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="账号" prop="username">
+            <el-input v-model="form.username"></el-input>
+          </el-form-item>
+          <el-form-item label="用户名" :prop="!loginOrRegister?'name':''" v-show="!loginOrRegister">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input show-password v-model="form.password"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" :prop="!loginOrRegister?'repeatPassword':''" v-show="!loginOrRegister">
+            <el-input show-password v-model="form.repeatPassword"></el-input>
+          </el-form-item>
+          <el-form-item style="text-align: right">
+            <el-button @click="reset">重置</el-button>
+            <el-button type="primary" @click="loginOrRegisterMethod">{{ loginOrRegister ? '登录' : '注册' }}</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+      <el-col style="width: 40%">&nbsp;</el-col>
+    </el-row>
   </div>
 </template>
 <script>
@@ -74,13 +82,16 @@ export default {
           if (valid) {
             this.$http.post(userApi.login, this.form)
               .then((res) => {
-                if (res) {
+                if (res.message) {
                   this.$message.success('登录成功!')
                   // this.$router.push
                   this.$parent.menuShow = true
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
                   this.reset()
+                  this.$nextTick(() => {
+                    this.$refs.form.clearValidate()
+                  })
                 }
               })
           }
@@ -92,7 +103,7 @@ export default {
             this.form.repeatPassword = this.$md5(this.form.repeatPassword)
             this.$http.post(userApi.register, [this.form])
               .then((res) => {
-                if (res) {
+                if (res.message) {
                   this.$message.success('注册成功!')
                   this.loginOrRegister = true
                 } else {
@@ -108,4 +119,10 @@ export default {
 }
 </script>
 <style scoped>
+#login {
+  background: url("../../static/images/background.jpg");
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
+  margin: 0;
+}
 </style>

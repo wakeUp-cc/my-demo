@@ -3,45 +3,45 @@ server:
 spring:
   application:
     name: server8001
-  cloud:
-    nacos:
-      # 注册中心
-      discovery:
-        server-addr: 127.0.0.1:8848
-    sentinel:
-      transport:
-        # 任意指定一个端口供dashboard监听（此应用作为一个服务端提供接口）
-        port: 8101
-        # sentinel dashboard启动的端口
-        dashboard: 127.0.0.1:8100
-  # springboot2.1以上需要添加以下配置
-  main:
-    allow-bean-definition-overriding: true
-feign:
-  # 开启Feign对sentinel的支持
-  sentinel:
-    enabled: true
-# 监听端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-dubbo:
-  #dubbo扫描dubbo注解包名
-  scan:
-    base-packages: com.cc
-  protocol:
-    # dubbo 协议
-    name: dubbo
-    # dubbo 协议端⼝（ -1 表示⾃增端⼝，从 20880 开始）
-    port: -1
-  cloud:
-    # 订阅服务提供⽅的应⽤列表，订阅多个服务提供者使⽤ "," 连接
-    subscribed-services: server8002
-  registry:
-    #注册到springcloud服务
-    address: spring-cloud://127.0.0.1:8848
-  consumer:
-    #关闭订阅服务是否启动的检查【检查时，没有服务提供者会报错】
-    check: false
+#  cloud:
+#    nacos:
+#      # 注册中心
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#    sentinel:
+#      transport:
+#        # 任意指定一个端口供dashboard监听（此应用作为一个服务端提供接口）
+#        port: 8101
+#        # sentinel dashboard启动的端口
+#        dashboard: 127.0.0.1:8100
+#  # springboot2.1以上需要添加以下配置
+#  main:
+#    allow-bean-definition-overriding: true
+#feign:
+#  # 开启Feign对sentinel的支持
+#  sentinel:
+#    enabled: true
+## 监听端点
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#dubbo:
+#  #dubbo扫描dubbo注解包名
+#  scan:
+#    base-packages: com.cc
+#  protocol:
+#    # dubbo 协议
+#    name: dubbo
+#    # dubbo 协议端⼝（ -1 表示⾃增端⼝，从 20880 开始）
+#    port: -1
+#  cloud:
+#    # 订阅服务提供⽅的应⽤列表，订阅多个服务提供者使⽤ "," 连接
+#    subscribed-services: server8002
+#  registry:
+#    #注册到springcloud服务
+#    address: spring-cloud://127.0.0.1:8848
+#  consumer:
+#    #关闭订阅服务是否启动的检查【检查时，没有服务提供者会报错】
+#    check: false
