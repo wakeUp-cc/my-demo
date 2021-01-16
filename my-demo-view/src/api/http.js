@@ -42,18 +42,19 @@ axios.interceptors.response.use(response => {
   loadingInstance.close()
   // 1. 根据自己项目需求定制自己的拦截
   // 如果请求接口返回失败,那么就进行弹窗提示
-  if (response.code === 500) {
-    Message.error(response.message)
+  // 由于axios的返回结果被封装了一层,需要取data值,才是后台返回的数据
+  if (response.data.code === 500) {
+    Message.error(response.data.message)
   }
   // 2. 然后返回数据
-  return response
+  return response.data
 }, error => {
   // 关闭加载框
   loadingInstance.close()
   // 请求失败
   if (error.data) {
     let message = '请求错误!'
-    switch (error.data.status) {
+    switch (error.data.code) {
       case 400:
         // 对400错误进行处理
         break
