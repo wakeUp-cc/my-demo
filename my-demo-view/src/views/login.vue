@@ -70,6 +70,7 @@ export default {
     }
   },
   mounted () {
+    this.$parent.menuShow = false
   },
   methods: {
     reset () {
@@ -91,10 +92,10 @@ export default {
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
                   this.reset()
+                  this.$nextTick(() => {
+                    this.$refs.form.clearValidate()
+                  })
                 }
-                this.$nextTick(() => {
-                  this.$refs.form.clearValidate()
-                })
               })
           }
         })

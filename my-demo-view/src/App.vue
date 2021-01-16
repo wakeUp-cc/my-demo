@@ -1,31 +1,54 @@
 <template>
   <div id="app">
     <!--菜单树-->
-    <menuComponents v-show="menuShow"></menuComponents>
+    <menuComponents v-if="menuShow" :menuTree="menuTree"></menuComponents>
     <router-view/>
   </div>
 </template>
 
 <script>
 import menuComponents from '@/components/menu'
+import menuApi from '@/api/menu'
 
 export default {
   name: 'App',
   components: {menuComponents},
   data () {
     return {
-      // 是否显示菜单,如果要显示,则调用this.$parent.menuShow = true
-      menuShow: false
+      // 是否显示菜单,如果要隐藏,则调用this.$parent.menuShow = false
+      menuShow: true,
+      // 菜单树
+      menuTree: null
+    }
+  },
+  mounted () {
+    this.loadMenuTree()
+  },
+  methods: {
+    // 加载菜单树
+    loadMenuTree () {
+      this.$http.get(menuApi.getMenuTree)
+        .then((res) => {
+          this.menuTree = res.message
+        })
     }
   }
 }
 </script>
 
 <style>
-#app, #app > div, html, body {
+#app, html, body {
   height: 100%;
   padding: 0;
   margin: 0;
+}
+
+#app > div {
+  height: 100%;
+  width: 89%;
+  padding: 0;
+  margin: 0;
+  float: left;
 }
 
 * {
