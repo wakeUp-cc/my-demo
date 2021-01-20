@@ -129,5 +129,6 @@ export default {
   background-size: 100% 100%;
   -moz-background-size: 100% 100%;
   margin: 0;
+  width: 100%;
 }
 </style>
