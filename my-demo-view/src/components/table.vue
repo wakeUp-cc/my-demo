@@ -1,66 +1,51 @@
 <template>
   <div>
-    <el-tabs v-model="editableTabsValue" type="card" editable @edit="handleTabsEdit">
+    <el-tabs v-model="tableName" type="card" editable @tab-remove="removeTable">
       <el-tab-pane
         :key="item.name"
         v-for="item in editableTabs"
         :label="item.title"
         :name="item.name"
       >
+        <router-view/>
       </el-tab-pane>
     </el-tabs>
-    <router-view/>
   </div>
 </template>
 <script>
 export default {
   components: {},
-  props: {},
+  props: {
+    checkMenuPath: {
+      default: null,
+      type: String
+    }
+  },
   created () {
   },
   mounted () {
   },
   data () {
     return {
-      editableTabsValue: '2',
+      tableName: '',
       editableTabs: [{
         title: 'Tab 1',
         name: '1',
-        content: 'Tab 1 content'
-      }, {
-        title: 'Tab 2',
-        name: '2',
-        content: 'Tab 2 content'
-      }],
-      tabIndex: 2
+        path: ''
+      }]
+    }
+  },
+  watch: {
+    checkMenuPath (newVal, oldVal) {
+      console.log('table', newVal)
     }
   },
   methods: {
-    handleTabsEdit (targetName, action) {
-      if (action === 'add') {
-        let newTabName = ++this.tabIndex + ''
-        this.editableTabs.push({
-          title: 'New Tab',
-          name: newTabName,
-          content: 'New Tab content'
-        })
-        this.editableTabsValue = newTabName
-      }
-      if (action === 'remove') {
-        let tabs = this.editableTabs
-        let activeName = this.editableTabsValue
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              let nextTab = tabs[index + 1] || tabs[index - 1]
-              if (nextTab) {
-                activeName = nextTab.name
-              }
-            }
-          })
+    removeTable (name) {
+      for (let i = 0, len = this.editableTabs.length; i < len; i++) {
+        if (this.editableTabs[i].name === name) {
+          this.editableTabs.splice(i, 1)
         }
-        this.editableTabsValue = activeName
-        this.editableTabs = tabs.filter(tab => tab.name !== targetName)
       }
     }
   }

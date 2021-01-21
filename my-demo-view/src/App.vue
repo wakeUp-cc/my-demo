@@ -2,23 +2,26 @@
   <div id="app">
     <!--菜单树-->
     <menuComponents v-if="menuShow" :menuTree="menuTree"></menuComponents>
-    <router-view/>
+    <tableComponents v-if="menuShow" :checkMenuPath="checkMenuPath"></tableComponents>
+    <router-view v-if="!menuShow"></router-view>
   </div>
 </template>
 
 <script>
 import menuComponents from '@/components/menu'
+import tableComponents from '@/components/table'
 import menuApi from '@/api/menu'
 
 export default {
   name: 'App',
-  components: {menuComponents},
+  components: {menuComponents, tableComponents},
   data () {
     return {
       // 是否显示菜单,如果要隐藏,则调用this.$parent.menuShow = false
       menuShow: true,
       // 菜单树
-      menuTree: null
+      menuTree: null,
+      checkMenuPath: null
     }
   },
   mounted () {
