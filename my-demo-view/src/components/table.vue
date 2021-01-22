@@ -15,12 +15,7 @@
 <script>
 export default {
   components: {},
-  props: {
-    checkMenuPath: {
-      default: null,
-      type: String
-    }
-  },
+  props: {},
   created () {
   },
   mounted () {
@@ -32,12 +27,13 @@ export default {
         title: 'Tab 1',
         name: '1',
         path: ''
-      }]
+      }],
+      path: null
     }
   },
   watch: {
-    checkMenuPath (newVal, oldVal) {
-      console.log('table', newVal)
+    $route (to, from) {
+      console.log(to.path)
     }
   },
   methods: {

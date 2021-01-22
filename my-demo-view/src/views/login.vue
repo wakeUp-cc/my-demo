@@ -88,7 +88,7 @@ export default {
                 if (res.message) {
                   this.$message.success('登录成功!')
                   this.$parent.menuShow = true
-                  this.$router.push('/index')
+                  this.$router.push('/')
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
                   this.reset()

@@ -9,13 +9,11 @@ export default {
   components: {},
   props: {},
   data () {
-    return {
-    }
+    return {}
   },
   mounted () {
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style scoped>

@@ -4,7 +4,6 @@
     router
     background-color="#545c64"
     text-color="#fff"
-    @select="select"
     active-text-color="#ffd04b">
     <!--循环树菜单-->
     <div v-for="(menu,index) in menuTree" :key="index">
@@ -38,15 +37,13 @@ export default {
     }
   },
   data () {
-    return {}
+    return {
+    }
   },
   mounted () {
   },
   components: {menuComponents},
   methods: {
-    select (index, indexPath) {
-      this.$parent.checkMenuPath = index
-    }
   }
 }
 </script>
