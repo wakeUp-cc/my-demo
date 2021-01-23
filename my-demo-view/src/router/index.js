@@ -5,14 +5,15 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
-    {path: '/login', component: () => import('@/views/login')},
+    {path: '/login', name: '登录', component: () => import('@/views/login')},
     {
+      // 嵌套路由,配合标签页使用
       path: '/',
       component: () => import('@/components/table'),
       children: [
-        {path: 'index', component: () => import('@/views/index')},
-        {path: 'member', component: () => import('@/views/member/member')},
-        {path: 'menu', component: () => import('@/views/menu/menu')}
+        {path: 'index', name: '首页', component: () => import('@/views/index')},
+        {path: 'member', name: '会员管理', component: () => import('@/views/member/member')},
+        {path: 'menu', name: '菜单管理', component: () => import('@/views/menu/menu')}
       ]
     }
   ]

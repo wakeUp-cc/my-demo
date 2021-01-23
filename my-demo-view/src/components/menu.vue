@@ -37,14 +37,12 @@ export default {
     }
   },
   data () {
-    return {
-    }
+    return {}
   },
   mounted () {
   },
   components: {menuComponents},
-  methods: {
-  }
+  methods: {}
 }
 </script>
 <style scoped>

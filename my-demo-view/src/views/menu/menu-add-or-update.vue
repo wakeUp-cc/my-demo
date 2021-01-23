@@ -105,7 +105,7 @@ export default {
           this.$http.request({
             url: `/cc/menu/info/${this.dataForm.id}`,
             method: 'get'
-          }).then(({data}) => {
+          }).then((data) => {
             if (data && data.code === 200) {
               this.dataForm.name = data.message.name
               this.dataForm.path = data.message.path
@@ -142,7 +142,7 @@ export default {
               'updateUser': this.dataForm.updateUser,
               'updateTime': this.dataForm.updateTime
             }]
-          }).then(({data}) => {
+          }).then((data) => {
             if (data && data.message && data.code === 200) {
               this.$message.success('操作成功!')
               this.visible = false

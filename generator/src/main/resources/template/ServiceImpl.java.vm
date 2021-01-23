@@ -15,18 +15,13 @@ public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${c
     @Override
     public IPage<${className}Entity> list(${className}Entity ${classname}) throws Exception {
         IPage<${className}Entity> result = new Page<>();
+        LambdaQueryWrapper<${className}Entity> queryWrapper = new QueryWrapper<${className}Entity>()
+                .lambda();
         if (${classname}.getIsPage()) {
-            result = page(
-                    new Page<${className}Entity>(${classname}.getCurrent(), ${classname}.getSize()),
-            new QueryWrapper<${className}Entity>()
-                    .lambda()
-            );
+            result = page(new Page<${className}Entity>(${classname}.getCurrent(), ${classname}.getSize()),queryWrapper);
         } else {
             result.setRecords(
-                    list(
-                            new QueryWrapper<${className}Entity>()
-                                    .lambda()
-                    )
+                    list(queryWrapper)
             );
         }
         return result;

@@ -3,6 +3,8 @@ package com.cc.service.impl;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNode;
 import cn.hutool.core.lang.tree.TreeUtil;
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,18 +24,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, MenuEntity> impleme
     @Override
     public IPage<MenuEntity> list(MenuEntity menu) throws Exception {
         IPage<MenuEntity> result = new Page<>();
+        String path = menu.getPath();
+        LambdaQueryWrapper<MenuEntity> queryWrapper = new QueryWrapper<MenuEntity>()
+                .lambda()
+                .eq(StrUtil.isNotBlank(path), MenuEntity::getPath, path);
         if (menu.getIsPage()) {
-            result = page(
-                    new Page<MenuEntity>(menu.getCurrent(), menu.getSize()),
-                    new QueryWrapper<MenuEntity>()
-                            .lambda()
-            );
+            result = page(new Page<MenuEntity>(menu.getCurrent(), menu.getSize()), queryWrapper);
         } else {
             result.setRecords(
-                    list(
-                            new QueryWrapper<MenuEntity>()
-                                    .lambda()
-                    )
+                    list(queryWrapper)
             );
         }
         return result;

@@ -39,6 +39,7 @@
 import userApi from '@/api/user'
 
 export default {
+  name: 'login',
   components: {},
   props: {},
   data () {

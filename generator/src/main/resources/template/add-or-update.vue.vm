@@ -56,11 +56,11 @@
             #[[this.$http.request({]]#
               url: `/${moduleName}/${pathName}/info/#[[$]]#{this.dataForm.${pk.attrname}}`,
               method: 'get'
-            }).then(({data}) => {
-              if (data && data.code === 200) {
+            }).then((res) => {
+              if (res && res.code === 200) {
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
-                this.dataForm.${column.attrname} = data.message.${column.attrname}
+                this.dataForm.${column.attrname} = res.message.${column.attrname}
 #end
 #end
               }
@@ -85,8 +85,8 @@
 #end
 #end
               }]
-            }).then(({data}) => {
-              if (data && data.message && data.code === 200) {
+            }).then((res) => {
+              if (res && res.message && res.code === 200) {
                 #[[this.$message.success('操作成功!')]]#
                 this.visible = false
                 #[[this.$emit('refreshDataList')]]#

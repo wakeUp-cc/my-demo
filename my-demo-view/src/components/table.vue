@@ -1,48 +1,85 @@
 <template>
   <div>
-    <el-tabs v-model="tableName" type="card" editable @tab-remove="removeTable">
+    <el-tabs v-model="selectedTab" type="card" editable @tab-remove="removeTable" :before-leave="beforeLeave">
       <el-tab-pane
-        :key="item.name"
-        v-for="item in editableTabs"
-        :label="item.title"
-        :name="item.name"
+        v-for="tab in tabs"
+        :key="tab.name"
+        :label="tab.title"
+        :name="tab.name"
       >
-        <router-view/>
       </el-tab-pane>
     </el-tabs>
+    <keep-alive :include="cachePath.join(',')">
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 <script>
+import menuApi from '@/api/menu'
+
 export default {
+  name: 'tableComponents',
   components: {},
   props: {},
   created () {
   },
   mounted () {
+    this.detectTabs()
   },
   data () {
     return {
-      tableName: '',
-      editableTabs: [{
-        title: 'Tab 1',
-        name: '1',
-        path: ''
-      }],
-      path: null
+      // 选中的table
+      selectedTab: '/index',
+      // 所有的table
+      tabs: [],
+      // 缓存的页面名称
+      cachePath: []
     }
   },
   watch: {
+    // 监听路由动向
     $route (to, from) {
-      console.log(to.path)
+      this.selectedTab = to.path
+      if (this.tabs.filter(editableTab => editableTab.path === to.path).length === 0) {
+        // 查询菜单名称
+        this.$http.get(menuApi.list, {path: to.path})
+          .then((res) => {
+            if (res.code === 200) {
+              this.tabs.push({title: res.message.records[0].name, name: to.path, path: to.path})
+              // 当页面关闭时,清除掉页面的缓存,要求页面的名称和路径名称相同,且不包含字符/
+              this.cachePath.push(to.path.replace('/', ''))
+            }
+          })
+      }
     }
   },
   methods: {
+    // 关闭table
     removeTable (name) {
-      for (let i = 0, len = this.editableTabs.length; i < len; i++) {
-        if (this.editableTabs[i].name === name) {
-          this.editableTabs.splice(i, 1)
+      // 如果table只剩最后一个,则初始化table
+      if (this.tabs.length === 1) {
+        this.detectTabs()
+        return
+      }
+      for (let i = 0, len = this.tabs.length; i < len; i++) {
+        if (this.tabs[i].name === name) {
+          this.tabs.splice(i, 1)
+          this.cachePath.splice(i, 1)
+          // 关闭table后,自动访问上一个table
+          this.selectedTab = this.tabs[i - 1].path
+          this.$router.push(this.selectedTab)
         }
       }
+    },
+    // 点击table时,跳转至对应路由
+    beforeLeave (activeName, oldActiveName) {
+      this.$router.push(activeName)
+    },
+    // 初始化table
+    detectTabs () {
+      this.tabs = [{title: '首页', name: '/index', path: '/index'}]
+      this.cachePath = ['index']
+      this.$router.push(this.tabs[0].path)
     }
   }
 }

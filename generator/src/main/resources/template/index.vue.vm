@@ -81,28 +81,6 @@
       this.getDataList()
     },
     methods: {
-      // 获取数据列表
-      getDataList () {
-        this.dataListLoading = true
-        #[[this.$http.request({]]#
-          url: '/${moduleName}/${pathName}/list',
-          method: 'get',
-          #[[params: {]]#
-            'isPage': true,
-            'current': this.current,
-            'size': this.size
-          }
-        }).then(({data}) => {
-          if (data && data.code === 200) {
-            this.dataList = data.message.records
-            this.total = data.message.total
-          } else {
-            this.dataList = []
-            this.total = 0
-          }
-          this.dataListLoading = false
-        })
-      },
       // 每页数
       sizeChangeHandle (val) {
         this.size = val
@@ -125,6 +103,28 @@
           this.$refs.addOrUpdate.init(id)
         })
       },
+      // 获取数据列表
+      getDataList () {
+        this.dataListLoading = true
+        #[[this.$http.request({]]#
+                url: '/${moduleName}/${pathName}/list',
+                method: 'get',
+                #[[params: {]]#
+                'isPage': true,
+                'current': this.current,
+                'size': this.size
+        }
+      }).then((res) => {
+          if (res && res.code === 200) {
+            this.dataList = res.message.records
+            this.total = res.message.total
+          } else {
+            this.dataList = []
+            this.total = 0
+          }
+          this.dataListLoading = false
+        })
+      },
       // 删除
       deleteHandle (id) {
         let ids = id ? [id] : this.dataListSelections.map(item => {
@@ -139,8 +139,8 @@
             url: '/${moduleName}/${pathName}/delete',
             method: 'post',
             data: ids
-          }).then(({data}) => {
-            if (data && data.message && data.code === 200) {
+          }).then((res) => {
+            if (res && res.message && res.code === 200) {
               #[[this.$message.success('操作成功!')]]#
               this.getDataList()
             } else {

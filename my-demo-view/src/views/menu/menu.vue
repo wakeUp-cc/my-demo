@@ -129,6 +129,7 @@
 import AddOrUpdate from './menu-add-or-update'
 
 export default {
+  name: 'menu',
   data () {
     return {
       dataForm: {
@@ -161,7 +162,7 @@ export default {
           'current': this.current,
           'size': this.size
         }
-      }).then(({data}) => {
+      }).then((data) => {
         if (data && data.code === 200) {
           this.dataList = data.message.records
           this.total = data.message.total
@@ -208,7 +209,7 @@ export default {
           url: '/cc/menu/delete',
           method: 'post',
           data: ids
-        }).then(({data}) => {
+        }).then((data) => {
           if (data && data.message && data.code === 200) {
             this.$message.success('操作成功!')
             this.getDataList()

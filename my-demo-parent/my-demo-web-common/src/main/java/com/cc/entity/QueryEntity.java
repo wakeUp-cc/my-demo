@@ -18,26 +18,31 @@ public class QueryEntity {
      */
     @TableField(exist = false)
     private Date startTime;
+
     /**
      * 结束时间
      */
     @TableField(exist = false)
     private Date endTime;
+
     /**
      * 当前页
      */
     @TableField(exist = false)
     private Long current = 1L;
+
     /**
      * 每页记录数
      */
     @TableField(exist = false)
     private Long size = 10L;
+
     /**
      * 查询内容
      */
     @TableField(exist = false)
     private String search;
+
     /**
      * 是否分页
      */
