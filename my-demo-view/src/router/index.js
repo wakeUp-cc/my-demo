@@ -13,7 +13,8 @@ export default new Router({
       children: [
         {path: 'index', component: () => import('@/views/index')},
         {path: 'member', component: () => import('@/views/member/member')},
-        {path: 'menuView', component: () => import('@/views/menu/menu')}
+        {path: 'menuView', component: () => import('@/views/menu/menu')},
+        {path: 'user', component: () => import('@/views/user/user')}
       ]
     }
   ]

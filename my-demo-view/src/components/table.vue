@@ -66,9 +66,15 @@ export default {
         if (this.tabs[i].name === name) {
           this.tabs.splice(i, 1)
           this.cachePath.splice(i, 1)
-          // 关闭table后,自动访问上一个table
+          // 关闭打开的table时的操作
           if (this.$route.path === name) {
-            this.selectedTab = this.tabs[i - 1].path
+            // 默认访问下一个table
+            let jumpTab = this.tabs[i]
+            // 如果关闭的是一个最后一个table,那么就访问上一个table
+            if (!this.tabs[i]) {
+              jumpTab = this.tabs[i - 1]
+            }
+            this.selectedTab = jumpTab.path
             this.$router.push(this.selectedTab)
           }
         }
