@@ -11,7 +11,7 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 16/01/2021 17:41:01
+ Date: 23/01/2021 16:16:06
 */
 
 SET NAMES utf8mb4;
@@ -54,14 +54,14 @@ CREATE TABLE `menu`  (
   `update_user` bigint(64) NULL DEFAULT NULL COMMENT '修改人员ID',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
 INSERT INTO `menu` VALUES (1, '首页', '/index', NULL, 1, 1, 0, NULL, '2021-01-16 16:22:59', NULL, '2021-01-16 16:23:03');
 INSERT INTO `menu` VALUES (2, '系统设置', '', NULL, 2, 1, 0, NULL, '2021-01-16 16:23:32', NULL, '2021-01-16 16:23:36');
-INSERT INTO `menu` VALUES (3, '菜单管理', '/menu', NULL, 1, 1, 2, NULL, '2021-01-16 16:23:56', NULL, '2021-01-16 16:23:56');
+INSERT INTO `menu` VALUES (3, '菜单管理', '/menuView', NULL, 1, 1, 2, NULL, '2021-01-16 16:23:56', NULL, '2021-01-23 15:09:10');
 
 -- ----------------------------
 -- Table structure for user
@@ -75,7 +75,7 @@ CREATE TABLE `user`  (
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '注册时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
