@@ -129,7 +129,7 @@
 import AddOrUpdate from './menu-add-or-update'
 
 export default {
-  name: 'menu',
+  name: 'menuView',
   data () {
     return {
       dataForm: {

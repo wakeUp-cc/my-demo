@@ -9,6 +9,7 @@
       >
       </el-tab-pane>
     </el-tabs>
+    <!--缓存的页面名称,要求每个vue都必须有name,并且和访问路径名相同,且不带字符/-->
     <keep-alive :include="cachePath.join(',')">
       <router-view/>
     </keep-alive>
@@ -61,25 +62,32 @@ export default {
         this.detectTabs()
         return
       }
-      for (let i = 0, len = this.tabs.length; i < len; i++) {
+      for (let i = this.tabs.length - 1; i >= 0; i--) {
         if (this.tabs[i].name === name) {
           this.tabs.splice(i, 1)
           this.cachePath.splice(i, 1)
           // 关闭table后,自动访问上一个table
-          this.selectedTab = this.tabs[i - 1].path
-          this.$router.push(this.selectedTab)
+          if (this.$route.path === name) {
+            this.selectedTab = this.tabs[i - 1].path
+            this.$router.push(this.selectedTab)
+          }
         }
       }
     },
     // 点击table时,跳转至对应路由
     beforeLeave (activeName, oldActiveName) {
-      this.$router.push(activeName)
+      // 防止重复路由跳转
+      if (this.$route.path !== activeName) {
+        this.$router.push(activeName)
+      }
     },
     // 初始化table
     detectTabs () {
       this.tabs = [{title: '首页', name: '/index', path: '/index'}]
       this.cachePath = ['index']
-      this.$router.push(this.tabs[0].path)
+      if (this.$route.path !== this.tabs[0].path) {
+        this.$router.push(this.tabs[0].path)
+      }
     }
   }
 }
