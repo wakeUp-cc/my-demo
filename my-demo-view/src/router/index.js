@@ -3,9 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
-    {path: '/login', name: '登录', component: () => import('@/views/login')},
+    // meta中添加不需要登录验证的标识
+    {path: '/login', meta: {noRequireAuth: true}, name: '登录', component: () => import('@/views/login')},
     {
       // 嵌套路由,配合标签页使用
       path: '/',
@@ -19,4 +20,21 @@ export default new Router({
       ]
     }
   ]
+})
+
+export default router
+// 登录拦截
+router.beforeEach((to, from, next) => {
+  // 判断该路由是否需要登录权限
+  if (to.meta.noRequireAuth) {
+    next()
+  } else {
+    // 判断本地是否存在token
+    if (sessionStorage.getItem('token')) {
+      next()
+    } else {
+      // 未登录,跳转到登陆页面
+      next('/login')
+    }
+  }
 })

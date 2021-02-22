@@ -2,6 +2,7 @@
   <el-menu
     style="height: 100%;width: 11%;float: left"
     router
+    class="el-menu-vertical-demo"
     background-color="#545c64"
     text-color="#fff"
     active-text-color="#ffd04b">
@@ -42,6 +43,7 @@ export default {
   mounted () {
   },
   components: {menuComponents},
+  // 最好不要做任何操作,只通过传递过来的菜单数值得到菜单,因为这是一个递归菜单树,任何一个操作都会放大N倍
   methods: {}
 }
 </script>

@@ -25,6 +25,10 @@
           <el-form-item label="确认密码" prop="repeatPassword" v-if="!loginOrRegister">
             <el-input show-password v-model="form.repeatPassword"></el-input>
           </el-form-item>
+          <el-form-item label="验证码" prop="identifyCode">
+            <el-input v-model="form.identifyCode" style="width: 55%"></el-input>
+            <identifyCode @getIdentifyCode="getIdentifyCode" :contentHeight="40" style="float: right"></identifyCode>
+          </el-form-item>
           <el-form-item style="text-align: right">
             <el-button @click="reset">重置</el-button>
             <el-button type="primary" @click="loginOrRegisterMethod">{{ loginOrRegister ? '登录' : '注册' }}</el-button>
@@ -37,10 +41,11 @@
 </template>
 <script>
 import userApi from '@/api/user'
+import identifyCode from '@/components/identifyCode'
 
 export default {
   name: 'login',
-  components: {},
+  components: {identifyCode},
   props: {},
   data () {
     let repeatPassword = (rule, value, callback) => {
@@ -50,12 +55,21 @@ export default {
         callback()
       }
     }
+    let identifyCode = (rule, value, callback) => {
+      // 忽略大小写
+      if (value.toUpperCase() !== this.identifyCode.toUpperCase()) {
+        callback(new Error('验证码错误!'))
+      } else {
+        callback()
+      }
+    }
     return {
       rules: {
         username: [{required: true, message: '账号不能为空!', trigger: 'change'}],
         name: [{required: true, message: '用户名不能为空!', trigger: 'change'}],
         password: [{required: true, message: '密码不能为空!', trigger: 'change'}],
-        repeatPassword: [{required: true, validator: repeatPassword, trigger: 'change'}]
+        repeatPassword: [{required: true, validator: repeatPassword, trigger: 'change'}],
+        identifyCode: [{required: true, validator: identifyCode, trigger: 'change'}]
       },
       form: {
         username: null,
@@ -67,7 +81,8 @@ export default {
       loginOrRegisterSelect: [
         {label: '登录', value: true},
         {label: '注册', value: false}
-      ]
+      ],
+      identifyCode: null
     }
   },
   mounted () {
@@ -88,6 +103,7 @@ export default {
               .then((res) => {
                 if (res.message) {
                   this.$message.success('登录成功!')
+                  sessionStorage.setItem('token', res.message)
                   this.$parent.menuShow = true
                   this.$router.push('/')
                 } else {
@@ -120,6 +136,9 @@ export default {
           }
         })
       }
+    },
+    getIdentifyCode (identifyCode) {
+      this.identifyCode = identifyCode
     }
   }
 }

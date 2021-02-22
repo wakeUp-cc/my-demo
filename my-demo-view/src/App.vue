@@ -25,11 +25,13 @@ export default {
     this.loadMenuTree()
   },
   methods: {
-    // 加载菜单树
+    // 加载菜单树,只能在最外层加载,否则会形成死循环
     loadMenuTree () {
       this.$http.get(menuApi.getMenuTree)
         .then((res) => {
           this.menuTree = res.message
+          // 菜单树数据存入缓存,方便后期使用
+          sessionStorage.setItem('menuTree', JSON.stringify(this.menuTree))
         })
     }
   }

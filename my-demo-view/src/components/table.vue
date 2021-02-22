@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="selectedTab" type="card" editable @tab-remove="removeTable" :before-leave="beforeLeave">
+    <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave">
       <el-tab-pane
         v-for="tab in tabs"
         :key="tab.name"
@@ -9,7 +9,7 @@
       >
       </el-tab-pane>
     </el-tabs>
-    <!--缓存的页面名称,要求每个vue都必须有name,并且和访问路径名相同,且不带字符/-->
+    <!--缓存的页面名称,要求每个页面级别vue都必须有name,并且和访问路径名相同,且不带字符/-->
     <keep-alive :include="cachePath.join(',')">
       <router-view/>
     </keep-alive>
@@ -89,8 +89,9 @@ export default {
     },
     // 初始化table
     detectTabs () {
-      this.tabs = [{title: '首页', name: '/index', path: '/index'}]
-      this.cachePath = ['index']
+      let menuTree = JSON.parse(sessionStorage.getItem('menuTree'))[0]
+      this.tabs = [{title: menuTree.name, name: menuTree.path, path: menuTree.path}]
+      this.cachePath = [menuTree.path.replace('/', '')]
       if (this.$route.path !== this.tabs[0].path) {
         this.$router.push(this.tabs[0].path)
       }

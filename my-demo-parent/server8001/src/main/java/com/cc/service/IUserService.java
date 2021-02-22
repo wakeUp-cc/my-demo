@@ -38,7 +38,7 @@ public interface IUserService extends IService<UserEntity> {
      * @return
      * @throws Exception
      */
-    Boolean login(UserEntity userEntity) throws Exception;
+    String login(UserEntity userEntity) throws Exception;
 
 }
 

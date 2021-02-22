@@ -1,5 +1,6 @@
 package com.cc.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -44,12 +45,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public Boolean login(UserEntity userEntity) throws Exception {
+    public String login(UserEntity userEntity) throws Exception {
         UserEntity one = getOne(new QueryWrapper<UserEntity>()
                 .lambda()
                 .eq(UserEntity::getUsername, userEntity.getUsername())
                 .eq(UserEntity::getPassword, DigestUtil.md5Hex(userEntity.getPassword() + Constant.SALT)));
-        return one != null;
+        if (one != null) {
+            //生成token
+            String token = IdUtil.simpleUUID();
+            return token;
+        } else {
+            return null;
+        }
     }
 
 }
