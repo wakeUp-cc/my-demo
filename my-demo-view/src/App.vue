@@ -22,7 +22,6 @@ export default {
     }
   },
   mounted () {
-    this.loadMenuTree()
   },
   methods: {
     // 加载菜单树,只能在最外层加载,否则会形成死循环
@@ -33,6 +32,13 @@ export default {
           // 菜单树数据存入缓存,方便后期使用
           sessionStorage.setItem('menuTree', JSON.stringify(this.menuTree))
         })
+    }
+  },
+  watch: {
+    menuShow (newVal, oldVal) {
+      if (newVal) {
+        this.loadMenuTree()
+      }
     }
   }
 }

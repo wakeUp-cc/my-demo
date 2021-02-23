@@ -10,12 +10,18 @@ import com.cc.constants.Constant;
 import com.cc.entity.UserEntity;
 import com.cc.mapper.UserMapper;
 import com.cc.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements IUserService {
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public IPage<UserEntity> list(UserEntity user) throws Exception {
@@ -53,6 +59,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (one != null) {
             //生成token
             String token = IdUtil.simpleUUID();
+            redisTemplate.opsForValue().set(token, one, 30, TimeUnit.MINUTES);
             return token;
         } else {
             return null;

@@ -5,8 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.EqualsAndHashCode;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 #if(${hasBigDecimal})
 import java.math.BigDecimal;
 #end
@@ -22,6 +23,7 @@ import java.util.Date;
  */
 @Data
 @TableName("${tableName}")
+@Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 public class ${className}Entity extends QueryEntity implements Serializable {
 
