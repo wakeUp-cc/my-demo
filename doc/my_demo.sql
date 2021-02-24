@@ -11,31 +11,11 @@
  Target Server Version : 50727
  File Encoding         : 65001
 
- Date: 23/01/2021 16:16:06
+ Date: 24/02/2021 14:12:07
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for member
--- ----------------------------
-DROP TABLE IF EXISTS `member`;
-CREATE TABLE `member`  (
-  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '会员名称',
-  `age` smallint(16) NULL DEFAULT NULL COMMENT '会员年龄',
-  `sex` smallint(1) NULL DEFAULT NULL COMMENT '会员性别  字典表 sex',
-  `create_user` bigint(64) NULL DEFAULT NULL COMMENT '创建人员ID',
-  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  `update_user` bigint(64) NULL DEFAULT NULL COMMENT '修改人员ID',
-  `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '会员表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of member
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for menu
@@ -54,7 +34,7 @@ CREATE TABLE `menu`  (
   `update_user` bigint(64) NULL DEFAULT NULL COMMENT '修改人员ID',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of menu
@@ -69,17 +49,20 @@ INSERT INTO `menu` VALUES (3, '菜单管理', '/menuView', NULL, 1, 1, 2, NULL, 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `username` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `username` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '账号',
   `password` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '密码',
   `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '用户名',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+  `age` int(16) NULL DEFAULT NULL COMMENT '年龄',
+  `sex` smallint(1) NULL DEFAULT NULL COMMENT '性别',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '注册时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (8, '313821660', 'cedeece8b1ba8ac230f18a11c60416d1', '池', '2021-01-16 15:44:56', '2021-01-16 15:44:56');
+INSERT INTO `user` VALUES (1, '313821660', 'cedeece8b1ba8ac230f18a11c60416d1', '池臣', NULL, NULL, NULL, '2021-02-22 10:59:09', '2021-02-22 10:59:09');
 
 SET FOREIGN_KEY_CHECKS = 1;

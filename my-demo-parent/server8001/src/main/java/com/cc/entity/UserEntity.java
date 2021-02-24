@@ -33,7 +33,7 @@ public class UserEntity extends QueryEntity implements Serializable {
 	private Long id;
 
 	/**
-	 * 用户名
+	 * 账号
 	 */
 	@TableField("username")
 	private String username;
@@ -49,6 +49,24 @@ public class UserEntity extends QueryEntity implements Serializable {
 	 */
 	@TableField("name")
 	private String name;
+
+	/**
+	 * 头像
+	 */
+	@TableField("icon")
+	private String icon;
+
+	/**
+	 * 年龄
+	 */
+	@TableField("age")
+	private Integer age;
+
+	/**
+	 * 性别
+	 */
+	@TableField("sex")
+	private Integer sex;
 
 	/**
 	 * 注册时间

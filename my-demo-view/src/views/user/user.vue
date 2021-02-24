@@ -34,7 +34,7 @@
         header-align="center"
         align="center"
         :show-overflow-tooltip="true"
-        label="用户名">
+        label="账号">
       </el-table-column>
       <el-table-column
         prop="password"

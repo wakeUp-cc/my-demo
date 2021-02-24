@@ -5,6 +5,7 @@ import com.cc.entity.ResEntity;
 import com.cc.entity.UserEntity;
 import com.cc.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class UserController {
 
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 查询单条
@@ -76,6 +79,19 @@ public class UserController {
     @PostMapping("/login")
     public ResEntity<String> login(@RequestBody UserEntity userEntity) throws Exception {
         return ResEntity.success(iUserService.login(userEntity));
+    }
+
+    /**
+     * 获取当前登录用户
+     *
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/getCurrentUser/{token}")
+    public ResEntity<UserEntity> getCurrentUser(@PathVariable("token") String token) throws Exception {
+        Object currentUser = redisTemplate.opsForValue().get(token);
+        return ResEntity.success(currentUser == null ? null : (UserEntity) currentUser);
     }
 
 }
