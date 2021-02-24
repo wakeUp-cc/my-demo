@@ -14,7 +14,8 @@ export default {
   },
   mounted () {
   },
-  methods: {}
+  methods: {
+  }
 }
 </script>
 <style scoped>

@@ -26,7 +26,8 @@
             <el-input show-password v-model="form.repeatPassword"></el-input>
           </el-form-item>
           <el-form-item label="验证码" prop="identifyCode">
-            <el-input v-model="form.identifyCode" style="width: 55%"></el-input>
+            <el-input v-model="form.identifyCode" style="width: 55%"
+                      @keyup.enter.native="loginOrRegisterMethod"></el-input>
             <identifyCode @getIdentifyCode="getIdentifyCode" :contentHeight="40" style="float: right"></identifyCode>
           </el-form-item>
           <el-form-item style="text-align: right">
@@ -41,6 +42,7 @@
 </template>
 <script>
 import userApi from '@/api/user'
+import menuApi from '@/api/menu'
 import identifyCode from '@/components/identifyCode'
 
 export default {
@@ -57,7 +59,7 @@ export default {
     }
     let identifyCode = (rule, value, callback) => {
       // 忽略大小写
-      if (value.toUpperCase() !== this.identifyCode.toUpperCase()) {
+      if (String(value).toUpperCase() !== String(this.identifyCode).toUpperCase()) {
         callback(new Error('验证码错误!'))
       } else {
         callback()
@@ -69,7 +71,7 @@ export default {
         name: [{required: true, message: '用户名不能为空!', trigger: 'change'}],
         password: [{required: true, message: '密码不能为空!', trigger: 'change'}],
         repeatPassword: [{required: true, validator: repeatPassword, trigger: 'change'}],
-        identifyCode: [{required: true, validator: identifyCode, trigger: 'change'}]
+        identifyCode: [{required: true, validator: identifyCode, trigger: 'blur'}]
       },
       form: {
         username: null,
@@ -98,14 +100,24 @@ export default {
       if (this.loginOrRegister) {
         this.$refs.form.validate((valid) => {
           if (valid) {
+            // 加密
             this.form.password = this.$md5(this.form.password)
+            // 登录
             this.$http.post(userApi.login, this.form)
-              .then((res) => {
-                if (res.message) {
+              .then(loginRes => {
+                if (loginRes.message) {
                   this.$message.success('登录成功!')
-                  sessionStorage.setItem('token', res.message)
-                  this.$parent.menuShow = true
-                  this.$router.push('/')
+                  sessionStorage.setItem('token', loginRes.message)
+                  // 请求菜单树
+                  this.$http.get(menuApi.getMenuTree)
+                    .then(menuTreeRes => {
+                      this.$parent.menuTree = menuTreeRes.message
+                      // 菜单树数据存入缓存,方便后期使用
+                      sessionStorage.setItem('menuTree', JSON.stringify(menuTreeRes.message))
+                      // 显示菜单树并且跳转至table页
+                      this.$parent.menuShow = true
+                      this.$router.push('/')
+                    })
                 } else {
                   this.$message.error('登录失败,请检查账号或密码!')
                   this.reset()
