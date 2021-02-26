@@ -14,7 +14,6 @@ const router = new Router({
       component: () => import('@/components/table'),
       children: [
         {path: 'index', name: '首页', component: () => import('@/views/index')},
-        {path: 'member', name: '会员管理', component: () => import('@/views/member/member')},
         {path: 'menuView', name: '菜单管理', component: () => import('@/views/menu/menu')},
         {path: 'user', name: '用户管理', component: () => import('@/views/user/user')}
       ]

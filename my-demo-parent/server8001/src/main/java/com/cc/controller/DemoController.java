@@ -1,5 +1,9 @@
 package com.cc.controller;
 
+import com.alibaba.nacos.api.config.annotation.NacosValue;
+import com.cc.feign.IDemoFeignClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo2")
 public class DemoController {
 
-    //@Autowired
-    //private IDemoFeignClient iDemoFeignClient;
+    @Autowired
+    private IDemoFeignClient iDemoFeignClient;
 
     //@Reference
     //private IDemoService iDemoService;
 
-    //@NacosValue(value = "${test}", autoRefreshed = true)
-    //private String value;
+    @NacosValue(value = "${test}", autoRefreshed = true)
+    private String value;
 
-    //@GetMapping("/hello")
-    //public String hello() {
-    //    return iDemoFeignClient.hello() + value;
-    //}
+    @GetMapping("/hello")
+    public String hello() {
+        return iDemoFeignClient.hello() + value;
+    }
 
     //@GetMapping("/hello2")
     //@SentinelResource(fallback = "hello2FallBack")
