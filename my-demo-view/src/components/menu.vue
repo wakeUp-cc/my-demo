@@ -25,6 +25,7 @@
     </div>
   </el-menu>
 </template>
+
 <script>
 // 自己引用自己,递归调用
 import menuComponents from './menu'
@@ -47,5 +48,6 @@ export default {
   methods: {}
 }
 </script>
+
 <style scoped>
 </style>

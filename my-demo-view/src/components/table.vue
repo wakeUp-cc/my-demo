@@ -1,5 +1,16 @@
 <template>
   <div>
+    <!--顶部头-->
+    <div style="text-align: right;">
+      <el-dropdown @command="handleCommand" style="margin-right: 10px">
+        <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="1">个人中心</el-dropdown-item>
+          <el-dropdown-item command="2">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
+    <!--table项-->
     <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave">
       <el-tab-pane
         v-for="tab in tabs"
@@ -15,8 +26,10 @@
     </keep-alive>
   </div>
 </template>
+
 <script>
 import menuApi from '@/api/menu'
+import userApi from '@/api/user'
 
 export default {
   name: 'tableComponents',
@@ -26,6 +39,10 @@ export default {
   },
   mounted () {
     this.detectTabs()
+    this.$util.getCurrentUser()
+      .then(res => {
+        this.currentUser = res.message
+      })
   },
   data () {
     return {
@@ -34,7 +51,9 @@ export default {
       // 所有的table
       tabs: [],
       // 缓存的页面名称
-      cachePath: []
+      cachePath: [],
+      // 当前登录用户
+      currentUser: {}
     }
   },
   watch: {
@@ -95,9 +114,30 @@ export default {
       if (this.$route.path !== this.tabs[0].path) {
         this.$router.push(this.tabs[0].path)
       }
+    },
+    // 头像框操作
+    handleCommand (command) {
+      switch (command) {
+        case '1':
+          break
+        case '2':
+          this.logout()
+          break
+      }
+    },
+    /**
+     * 登出
+     */
+    logout () {
+      this.$http.get(userApi.logout)
+        .then(() => {
+          sessionStorage.removeItem('token')
+          this.$router.push('/login')
+        })
     }
   }
 }
 </script>
+
 <style scoped>
 </style>

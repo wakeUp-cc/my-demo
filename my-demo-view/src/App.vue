@@ -12,6 +12,12 @@ import menuComponents from '@/components/menu'
 export default {
   name: 'App',
   components: {menuComponents},
+  mounted () {
+    // 防止页面刷新导致menuTree重置为null
+    if (!this.menuTree) {
+      this.menuTree = JSON.parse(sessionStorage.getItem('menuTree'))
+    }
+  },
   data () {
     return {
       // 是否显示菜单,如果要隐藏,则调用this.$parent.menuShow = false
@@ -19,8 +25,6 @@ export default {
       // 菜单树
       menuTree: null
     }
-  },
-  mounted () {
   },
   methods: {
   }

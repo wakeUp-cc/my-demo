@@ -82,6 +82,19 @@ public class UserController {
     }
 
     /**
+     * 登出
+     *
+     * @param token
+     * @return
+     * @throws Exception
+     */
+    @GetMapping("/logout")
+    public ResEntity<String> logout(String token) throws Exception {
+        redisTemplate.delete(token);
+        return ResEntity.success();
+    }
+
+    /**
      * 获取当前登录用户
      *
      * @param token

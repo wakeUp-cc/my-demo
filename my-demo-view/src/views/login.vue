@@ -14,16 +14,17 @@
             </el-select>
           </el-form-item>
           <el-form-item label="账号" prop="username">
-            <el-input v-model="form.username"></el-input>
+            <el-input v-model="form.username" @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
           <el-form-item label="用户名" prop="name" v-if="!loginOrRegister">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
-            <el-input show-password v-model="form.password"></el-input>
+          <el-form-item label="密码" prop="inputPassword">
+            <el-input show-password v-model="form.inputPassword" @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="repeatPassword" v-if="!loginOrRegister">
-            <el-input show-password v-model="form.repeatPassword"></el-input>
+            <el-input show-password v-model="form.repeatPassword"
+                      @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
           <el-form-item label="验证码" prop="identifyCode">
             <el-input v-model="form.identifyCode" style="width: 55%"
@@ -51,7 +52,7 @@ export default {
   props: {},
   data () {
     let repeatPassword = (rule, value, callback) => {
-      if (value !== this.form.password) {
+      if (value !== this.form.inputPassword) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
@@ -69,13 +70,14 @@ export default {
       rules: {
         username: [{required: true, message: '账号不能为空!', trigger: 'change'}],
         name: [{required: true, message: '用户名不能为空!', trigger: 'change'}],
-        password: [{required: true, message: '密码不能为空!', trigger: 'change'}],
+        inputPassword: [{required: true, message: '密码不能为空!', trigger: 'change'}],
         repeatPassword: [{required: true, validator: repeatPassword, trigger: 'change'}],
         identifyCode: [{required: true, validator: identifyCode, trigger: 'blur'}]
       },
       form: {
         username: null,
         password: null,
+        inputPassword: null,
         repeatPassword: null,
         name: null
       },
@@ -101,7 +103,7 @@ export default {
         this.$refs.form.validate((valid) => {
           if (valid) {
             // 加密
-            this.form.password = this.$md5(this.form.password)
+            this.form.password = this.$md5(this.form.inputPassword)
             // 登录
             this.$http.post(userApi.login, this.form)
               .then(loginRes => {
@@ -131,7 +133,7 @@ export default {
       } else {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.form.password = this.$md5(this.form.password)
+            this.form.password = this.$md5(this.form.inputPassword)
             this.$http.post(userApi.register, [this.form])
               .then((res) => {
                 if (res.message) {
@@ -155,6 +157,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 #login {
   background: url("../../static/images/background.jpg");
