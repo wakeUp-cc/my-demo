@@ -101,6 +101,8 @@ export default {
     },
     // 点击table时,跳转至对应路由
     beforeLeave (activeName, oldActiveName) {
+      // 更改高亮的菜单栏
+      this.$parent.defaultActive = activeName
       // 防止重复路由跳转
       if (this.$route.path !== activeName) {
         this.$router.push(activeName)

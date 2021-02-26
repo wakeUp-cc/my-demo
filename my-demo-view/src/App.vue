@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!--菜单树-->
-    <menuComponents v-if="menuShow" :menuTree="menuTree"></menuComponents>
+    <menuComponents v-if="menuShow" :menuTree="menuTree" :defaultActive="defaultActive" @handleSelect="handleSelect"></menuComponents>
     <router-view></router-view>
   </div>
 </template>
@@ -17,16 +17,24 @@ export default {
     if (!this.menuTree) {
       this.menuTree = JSON.parse(sessionStorage.getItem('menuTree'))
     }
+    // 默认第一个table高亮
+    this.defaultActive = this.menuTree[0].path
   },
   data () {
     return {
       // 是否显示菜单,如果要隐藏,则调用this.$parent.menuShow = false
       menuShow: true,
       // 菜单树
-      menuTree: null
+      menuTree: null,
+      // 默认高亮的table选项
+      defaultActive: null
     }
   },
   methods: {
+    // 点击table传递菜单路径,更改选中的菜单的颜色
+    handleSelect (key) {
+      this.defaultActive = key
+    }
   }
 }
 </script>
