@@ -13,12 +13,7 @@ export default {
   name: 'App',
   components: {menuComponents},
   mounted () {
-    // 防止页面刷新导致menuTree重置为null
-    if (!this.menuTree) {
-      this.menuTree = JSON.parse(sessionStorage.getItem('menuTree'))
-    }
-    // 默认第一个table高亮
-    this.defaultActive = this.menuTree[0].path
+    this.loadMenuTree()
   },
   data () {
     return {
@@ -34,6 +29,17 @@ export default {
     // 点击table传递菜单路径,更改选中的菜单的颜色
     handleSelect (key) {
       this.defaultActive = key
+    },
+    // 加载menuTree以及初始化高亮的table
+    loadMenuTree () {
+      // 防止页面刷新导致menuTree重置为null
+      if (!this.menuTree) {
+        this.menuTree = JSON.parse(sessionStorage.getItem('menuTree'))
+      }
+      // 默认第一个table高亮
+      if (this.menuTree) {
+        this.defaultActive = this.menuTree[0].path
+      }
     }
   }
 }

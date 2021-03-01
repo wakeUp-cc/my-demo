@@ -11,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import md5 from 'js-md5'
 import '@/styles/style.css'
 import util from '@/utils/util'
+import * as echarts from 'echarts'
 
 Vue.use(ElementUI)
 Vue.prototype.$http = http
@@ -18,6 +19,7 @@ Vue.prototype.$moment = moment
 Vue.prototype.$math = math
 Vue.prototype.$md5 = md5
 Vue.prototype.$util = util
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 

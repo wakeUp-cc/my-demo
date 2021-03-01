@@ -127,9 +127,7 @@ export default {
           break
       }
     },
-    /**
-     * 登出
-     */
+    // 登出
     logout () {
       this.$http.get(userApi.logout)
         .then(() => {

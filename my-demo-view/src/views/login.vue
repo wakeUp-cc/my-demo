@@ -118,6 +118,8 @@ export default {
                       sessionStorage.setItem('menuTree', JSON.stringify(menuTreeRes.message))
                       // 显示菜单树并且跳转至table页
                       this.$parent.menuShow = true
+                      // 初始化高亮的table
+                      this.$parent.loadMenuTree()
                       this.$router.push('/')
                     })
                 } else {
