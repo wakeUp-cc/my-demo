@@ -1,6 +1,5 @@
 <template>
-  <div>
-    首页
+  <div id="index">
     <echarts :option="option"></echarts>
   </div>
 </template>
@@ -17,8 +16,7 @@ export default {
   },
   mounted () {
   },
-  props: {
-  },
+  props: {},
   data () {
     return {
       option: {
@@ -36,14 +34,14 @@ export default {
       }
     }
   },
-  computed: {
-  },
-  watch: {
-  },
-  methods: {
-  }
+  computed: {},
+  watch: {},
+  methods: {}
 }
 </script>
 
 <style scoped>
+#index {
+  background: #eff1f4;
+}
 </style>

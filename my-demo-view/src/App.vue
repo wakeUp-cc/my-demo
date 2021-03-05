@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!--菜单树-->
-    <menuComponents v-if="menuShow" :menuTree="menuTree" :defaultActive="defaultActive" @handleSelect="handleSelect"></menuComponents>
+    <menuComponents v-if="menuShow" :menuTree="menuTree" :defaultActive="defaultActive"
+                    @handleSelect="handleSelect"></menuComponents>
     <router-view></router-view>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--面包屑-->
-    <el-row style="margin-top: 5px">
+    <el-row style="height: 10%">
       <el-col :span="22">
         <el-breadcrumb separator="/" style="position: relative;top: 13px">
           <el-breadcrumb-item :to="{ path: data.path }" v-for="data in $parent.breadCrumbs" :key="data.path">
@@ -10,7 +10,7 @@
         </el-breadcrumb>
       </el-col>
       <!--个人头像-->
-      <el-col :span="2" style="text-align: right">
+      <el-col :span="2" style="margin-top: 5px;text-align: right">
         <el-dropdown @command="handleCommand" style="margin-right: 10px">
           <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
           <el-dropdown-menu slot="dropdown">
@@ -21,7 +21,7 @@
       </el-col>
     </el-row>
     <!--table项-->
-    <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave">
+    <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave" style="height: 10%">
       <el-tab-pane
         v-for="tab in tabs"
         :key="tab.name"
@@ -32,7 +32,7 @@
     </el-tabs>
     <!--缓存的页面名称,要求每个页面级别vue都必须有name,并且和访问路径名相同,且不带字符/-->
     <keep-alive :include="cachePath.join(',')">
-      <router-view/>
+      <router-view style="height: 80%"/>
     </keep-alive>
   </div>
 </template>
