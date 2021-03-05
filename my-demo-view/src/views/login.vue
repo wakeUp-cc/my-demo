@@ -116,6 +116,10 @@ export default {
                       this.$parent.menuTree = menuTreeRes.message
                       // 菜单树数据存入缓存,方便后期使用
                       sessionStorage.setItem('menuTree', JSON.stringify(menuTreeRes.message))
+                      let menuArray = []
+                      // 菜单集合数据存入缓存,方便后期使用
+                      this.getMenuArray(menuTreeRes.message, menuArray)
+                      sessionStorage.setItem('menuArray', JSON.stringify(menuArray))
                       // 显示菜单树并且跳转至table页
                       this.$parent.menuShow = true
                       // 初始化高亮的table
@@ -153,8 +157,18 @@ export default {
         })
       }
     },
+    // 获取验证码
     getIdentifyCode (identifyCode) {
       this.identifyCode = identifyCode
+    },
+    // 获取菜单集合
+    getMenuArray (menuTree, menuArray) {
+      for (let menuTreeElement of menuTree) {
+        menuArray.push(menuTreeElement)
+        if (menuTreeElement.children) {
+          this.getMenuArray(menuTreeElement.children, menuArray)
+        }
+      }
     }
   }
 }

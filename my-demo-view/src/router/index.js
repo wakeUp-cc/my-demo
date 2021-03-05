@@ -21,6 +21,12 @@ const router = new Router({
   ]
 })
 
+// 解决路由重复跳转报错问题
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch((err) => err)
+}
+
 export default router
 // 登录拦截
 router.beforeEach((to, from, next) => {

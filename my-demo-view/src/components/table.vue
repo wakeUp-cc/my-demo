@@ -1,15 +1,25 @@
 <template>
   <div>
-    <!--顶部头-->
-    <div style="text-align: right;">
-      <el-dropdown @command="handleCommand" style="margin-right: 10px">
-        <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="1">个人中心</el-dropdown-item>
-          <el-dropdown-item command="2">退出登录</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-    </div>
+    <!--面包屑-->
+    <el-row style="margin-top: 5px">
+      <el-col :span="22">
+        <el-breadcrumb separator="/" style="position: relative;top: 13px">
+          <el-breadcrumb-item :to="{ path: data.path }" v-for="data in $parent.breadCrumbs" :key="data.path">
+            {{ data.name }}
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </el-col>
+      <!--个人头像-->
+      <el-col :span="2" style="text-align: right">
+        <el-dropdown @command="handleCommand" style="margin-right: 10px">
+          <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="1">个人中心</el-dropdown-item>
+            <el-dropdown-item command="2">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-col>
+    </el-row>
     <!--table项-->
     <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave">
       <el-tab-pane
@@ -28,7 +38,6 @@
 </template>
 
 <script>
-import menuApi from '@/api/menu'
 import userApi from '@/api/user'
 
 export default {
@@ -62,14 +71,11 @@ export default {
       this.selectedTab = to.path
       if (this.tabs.filter(editableTab => editableTab.path === to.path).length === 0) {
         // 查询菜单名称
-        this.$http.get(menuApi.list, {path: to.path})
-          .then((res) => {
-            if (res.code === 200) {
-              this.tabs.push({title: res.message.records[0].name, name: to.path, path: to.path})
-              // 当页面关闭时,清除掉页面的缓存,要求页面的名称和路径名称相同,且不包含字符/
-              this.cachePath.push(to.path.replace('/', ''))
-            }
-          })
+        let menuArray = JSON.parse(sessionStorage.getItem('menuArray'))
+        let menu = menuArray.filter(menu => menu.path === to.path)[0]
+        this.tabs.push({title: menu.name, name: to.path, path: to.path})
+        // 当页面关闭时,清除掉页面的缓存,要求页面的名称和路径名称相同,且不包含字符/
+        this.cachePath.push(to.path.replace('/', ''))
       }
     }
   },
@@ -102,7 +108,7 @@ export default {
     // 点击table时,跳转至对应路由
     beforeLeave (activeName, oldActiveName) {
       // 更改高亮的菜单栏
-      this.$parent.defaultActive = activeName
+      this.$parent.handleSelect(activeName)
       // 防止重复路由跳转
       if (this.$route.path !== activeName) {
         this.$router.push(activeName)
@@ -116,6 +122,7 @@ export default {
       if (this.$route.path !== this.tabs[0].path) {
         this.$router.push(this.tabs[0].path)
       }
+      this.$parent.loadBreadCrumbs()
     },
     // 头像框操作
     handleCommand (command) {
