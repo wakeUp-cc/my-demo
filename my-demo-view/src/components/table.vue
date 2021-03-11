@@ -1,27 +1,24 @@
 <template>
   <div>
     <!--面包屑-->
-    <el-row style="height: 10%">
-      <el-col :span="22">
-        <el-breadcrumb separator="/" style="position: relative;top: 13px">
-          <el-breadcrumb-item :to="{ path: data.path }" v-for="data in $parent.breadCrumbs" :key="data.path">
-            {{ data.name }}
-          </el-breadcrumb-item>
-        </el-breadcrumb>
-      </el-col>
+    <div style="height: 10%">
+      <el-breadcrumb separator="/" style="position: relative;top: 13px;">
+        <el-breadcrumb-item :to="{ path: data.path }" v-for="data in $parent.breadCrumbs" :key="data.path">
+          {{ data.name }}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
       <!--个人头像-->
-      <el-col :span="2" style="margin-top: 5px;text-align: right">
-        <el-dropdown @command="handleCommand" style="margin-right: 10px">
-          <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="1">个人中心</el-dropdown-item>
-            <el-dropdown-item command="2">退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </el-col>
-    </el-row>
+      <el-dropdown @command="handleCommand" style="margin: -10px 5px 0 0;float: right">
+        <el-avatar :src="currentUser.icon">{{ currentUser.name }}</el-avatar>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="1">个人中心</el-dropdown-item>
+          <el-dropdown-item command="2">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
     <!--table项-->
-    <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave" style="height: 10%">
+    <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave"
+             style="height: 10%">
       <el-tab-pane
         v-for="tab in tabs"
         :key="tab.name"
