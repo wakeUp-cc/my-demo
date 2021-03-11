@@ -19,8 +19,8 @@
           <el-form-item label="用户名" prop="name" v-if="!loginOrRegister">
             <el-input v-model="form.name" @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="inputPassword">
-            <el-input show-password v-model="form.inputPassword" @keyup.enter.native="loginOrRegisterMethod"></el-input>
+          <el-form-item label="密码" prop="password">
+            <el-input show-password v-model="form.password" @keyup.enter.native="loginOrRegisterMethod"></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="repeatPassword" v-if="!loginOrRegister">
             <el-input show-password v-model="form.repeatPassword"
@@ -52,7 +52,7 @@ export default {
   props: {},
   data () {
     let repeatPassword = (rule, value, callback) => {
-      if (value !== this.form.inputPassword) {
+      if (value !== this.form.password) {
         callback(new Error('两次输入密码不一致!'))
       } else {
         callback()
@@ -70,16 +70,16 @@ export default {
       rules: {
         username: [{required: true, message: '账号不能为空!', trigger: 'change'}],
         name: [{required: true, message: '用户名不能为空!', trigger: 'change'}],
-        inputPassword: [{required: true, message: '密码不能为空!', trigger: 'change'}],
+        password: [{required: true, message: '密码不能为空!', trigger: 'change'}],
         repeatPassword: [{required: true, validator: repeatPassword, trigger: 'change'}],
         identifyCode: [{required: true, validator: identifyCode, trigger: 'blur'}]
       },
       form: {
         username: null,
         password: null,
-        inputPassword: null,
         repeatPassword: null,
-        name: null
+        name: null,
+        identifyCode: null
       },
       loginOrRegister: true,
       loginOrRegisterSelect: [
@@ -102,10 +102,8 @@ export default {
       if (this.loginOrRegister) {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            // 加密
-            this.form.password = this.$md5(this.form.inputPassword)
             // 登录
-            this.$http.post(userApi.login, this.form)
+            this.$http.post(userApi.login, this.getLoginOrRegisterMethodForm())
               .then(loginRes => {
                 if (loginRes.message) {
                   this.$message.success('登录成功!')
@@ -139,8 +137,7 @@ export default {
       } else {
         this.$refs.form.validate((valid) => {
           if (valid) {
-            this.form.password = this.$md5(this.form.inputPassword)
-            this.$http.post(userApi.register, [this.form])
+            this.$http.post(userApi.register, [this.getLoginOrRegisterMethodForm()])
               .then((res) => {
                 if (res.message) {
                   this.$message.success('注册成功!')
@@ -157,9 +154,22 @@ export default {
         })
       }
     },
+    // 获取登录/注册的请求参数
+    getLoginOrRegisterMethodForm () {
+      let form = {}
+      for (let formKey in this.form) {
+        if (formKey !== 'repeatPassword' && formKey !== 'identifyCode') {
+          form[formKey] = this.form[formKey]
+        }
+      }
+      // 密码加密
+      form.password = this.$md5(this.form.password)
+      return form
+    },
     // 获取验证码
     getIdentifyCode (identifyCode) {
       this.identifyCode = identifyCode
+      this.form.identifyCode = null
     },
     // 获取菜单集合
     getMenuArray (menuTree, menuArray) {

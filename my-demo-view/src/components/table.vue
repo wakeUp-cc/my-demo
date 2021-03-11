@@ -1,8 +1,8 @@
 <template>
   <div>
     <!--面包屑-->
-    <div style="height: 10%">
-      <el-breadcrumb separator="/" style="position: relative;top: 13px;">
+    <div style="height: 6%;box-shadow:0 1px 4px rgb(0 21 41 / 8%)">
+      <el-breadcrumb separator="/" style="position: relative;top: 35%;margin-left: 1%">
         <el-breadcrumb-item :to="{ path: data.path }" v-for="data in $parent.breadCrumbs" :key="data.path">
           {{ data.name }}
         </el-breadcrumb-item>
@@ -18,7 +18,7 @@
     </div>
     <!--table项-->
     <el-tabs v-model="selectedTab" type="card" closable @tab-remove="removeTable" :before-leave="beforeLeave"
-             style="height: 10%">
+             style="height: 5%;margin-top: 5px;">
       <el-tab-pane
         v-for="tab in tabs"
         :key="tab.name"
@@ -29,7 +29,7 @@
     </el-tabs>
     <!--缓存的页面名称,要求每个页面级别vue都必须有name,并且和访问路径名相同,且不带字符/-->
     <keep-alive :include="cachePath.join(',')">
-      <router-view style="height: 80%"/>
+      <router-view style="height: 88%"/>
     </keep-alive>
   </div>
 </template>

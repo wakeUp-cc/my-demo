@@ -5,9 +5,9 @@
     class="el-menu-vertical-demo"
     :default-active="defaultActive"
     @select="handleSelect"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#ffd04b">
+    background-color="#304156"
+    text-color="#b1bfd9"
+    active-text-color="#409eff">
     <!--循环树菜单-->
     <div v-for="(menu,index) in menuTree" :key="index">
       <!--如果树菜单有子节点,就显示可以展开的样式,index就是路由地址,通过router属性,开启点击后跳转路由-->

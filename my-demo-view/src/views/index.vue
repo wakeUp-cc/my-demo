@@ -1,5 +1,10 @@
 <template>
   <div id="index">
+    <div class="cube-class">
+      <i class="el-icon-user-solid"></i>
+      <div>当前会员数</div>
+      <div>12222</div>
+    </div>
     <echarts :option="option"></echarts>
   </div>
 </template>
@@ -43,5 +48,26 @@ export default {
 <style scoped>
 #index {
   background: #eff1f4;
+}
+
+.cube-class {
+  height: 15%;
+  width: 20%;
+  background: aqua;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin-left: 4%;
+
+}
+
+.cube-class > i {
+  font-size: 60px;
+  position: relative;
+  top: 25%;
+  left: 6%;
+}
+
+.cube-class > div {
+  text-align: right;
+  padding-right: 8%;
 }
 </style>
